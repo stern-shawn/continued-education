@@ -10,6 +10,13 @@ export default function(ComposedComponent) {
       router: React.PropTypes.object,
     }
 
+    componentWillMount() {
+      // Redirect user to home if they are not authenticated
+      if (!this.props.authenticated) {
+        this.context.router.push('/');
+      }
+    }
+
     // Render the passed component, and pass down any addition properties that we've added using ES6 spread
     render() {
       return <ComposedComponent {...this.props} />

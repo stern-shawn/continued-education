@@ -17,6 +17,14 @@ export default function(ComposedComponent) {
       }
     }
 
+    // Add in an update hook so that if the user signs out (which will update the authentication prop)
+    // we run a check and do a forced redirect to home
+    componentWillUpdate(nextProps) {
+      if (!nextProps.authenticated) {
+        this.context.router.push('/');
+      }
+    }
+
     // Render the passed component, and pass down any addition properties that we've added using ES6 spread
     render() {
       return <ComposedComponent {...this.props} />

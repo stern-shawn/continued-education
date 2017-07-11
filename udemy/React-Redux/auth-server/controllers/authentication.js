@@ -8,6 +8,12 @@ const tokenForUser = (user) => {
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET);
 };
 
+exports.signin = (req, res, next) => {
+  // User has already had email and password auth'd, just pass them their JWT
+  // By this point, passport has injected the user object into req, at req.user
+  res.json({ token: tokenForUser(req.user) });
+}
+
 exports.signup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;

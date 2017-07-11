@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export default function({ dispatch }) {
   return next => action => {
     // If the action is not a promise, don't interact with it, just pass it along

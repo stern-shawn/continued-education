@@ -1,4 +1,5 @@
 dependencies:
+  bcrypt-nodejs: 0.0.3
   body-parser: 1.17.2
   express: 4.15.3
   mongoose: 4.11.1
@@ -21,6 +22,9 @@ packages:
   /basic-auth/1.1.0:
     resolution:
       integrity: sha1-RSIe5Cn37h5QNb4/UVM/HN/SmIQ=
+  /bcrypt-nodejs/0.0.3:
+    resolution:
+      integrity: sha1-xgkX8m3CNWYVZsaBBhwwPCsohCs=
   /bluebird/2.10.2:
     resolution:
       integrity: sha1-AkpVFylTCIV/FPkfEQb8O1VfRGs=
@@ -380,6 +384,7 @@ packages:
 registry: 'https://registry.npmjs.org/'
 shrinkwrapVersion: 3
 specifiers:
+  bcrypt-nodejs: ^0.0.3
   body-parser: ^1.17.2
   express: ^4.15.3
   mongoose: ^4.11.1

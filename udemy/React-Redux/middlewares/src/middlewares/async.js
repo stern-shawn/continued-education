@@ -10,15 +10,6 @@ export default function({ dispatch }) {
     // This action has a promise, wait for it to resolve, then dispatch a new action
     // with the resolved Promise's data as the payload
     action.payload
-      .then(response => {
-        // Create a new action with the existing action's type, etc, but with the promise's response
-        // as the new payload value
-        const newAction = {
-          ...action,
-          payload: response
-        };
-
-        dispatch(newAction);
-      });
+      .then(response => dispatch({ ...action, payload: response}));
   }
 }

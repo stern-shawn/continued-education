@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 // const http = require('http');
 const bodyParser = require('body-parser');
@@ -6,7 +7,7 @@ const router = require('./router');
 const mongoose = require('mongoose');
 
 // DB setup
-mongoose.connect('mongodb://localhost:auth/auth');
+mongoose.connect(process.env.MLAB);
 
 // App setup
 const app = express();

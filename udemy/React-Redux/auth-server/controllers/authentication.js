@@ -5,7 +5,7 @@ exports.signup = (req, res, next) => {
   const password = req.body.password;
 
   if (!email || !password) {
-    res.status(422).send({ error: 'Email and password must be defined' });
+    return res.status(422).send({ error: 'Email and password must be defined' });
   }
   
   User.findOne({ email })

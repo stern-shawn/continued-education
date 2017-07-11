@@ -1,4 +1,12 @@
+const jwt = require('jwt-simple');
 const User = require('../models/User');
+
+const tokenForUser = (user) => {
+  const timestamp = new Date().getTime();
+  // As a convention, JWTs have a 'sub' property, ie the 'subject' of the token.
+  // 'iat' refers to 'issued at time' for determining expiration
+  return jwt.encode({ sub: user.id, iat: timestamp }, process.env.SECRET);
+};
 
 exports.signup = (req, res, next) => {
   const email = req.body.email;
@@ -22,7 +30,10 @@ exports.signup = (req, res, next) => {
 
       // Respond to the request indicating that new user has been created
       user.save()
-        .then((user) => res.json(user))
+        .then((user) => {
+          // Respond, indicating that user was created successfully
+          res.json({ token: tokenForUser(user) })
+        })
         .catch(err => next(err));
     })
     .catch(err => next(err));

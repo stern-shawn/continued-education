@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import {
   AUTH_USER,
   AUTH_ERROR,
+  UNAUTH_USER,
 } from './types';
 
 const API_URL = 'http://localhost:3000';
@@ -34,4 +35,12 @@ export function authError(error) {
     type: AUTH_ERROR,
     payload: error,
   };
+}
+
+export function signoutUser() {
+  // When the user logs out:
+  // -Clear the JWT from local storage
+  localStorage.removeItem('token');
+  // -Dispatch the action to set the user auth state to false
+  return { type: UNAUTH_USER };
 }

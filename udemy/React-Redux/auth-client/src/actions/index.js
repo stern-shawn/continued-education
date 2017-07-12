@@ -13,7 +13,7 @@ export function signinUser({ email, password}) {
         // -Update state to indicate user is authenticated
         dispatch({ type: AUTH_USER });
         // -Save the JWT for later use
-        
+        localStorage.setItem('token', res.data.token);
         // -Redirect to /feature route
         browserHistory.push('/feature');
       })

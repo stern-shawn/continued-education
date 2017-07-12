@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const router = require('./router');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // DB setup
 mongoose.connect(process.env.MLAB);
@@ -12,6 +13,7 @@ mongoose.connect(process.env.MLAB);
 // App setup
 const app = express();
 app.use(morgan('combined'));  // Logging middleware
+app.use(cors()); // cors middleware, allows requests from other domains
 app.use(bodyParser.json({ type: '*/*' }));  // Parse incoming requests into JSON
 router(app);
 

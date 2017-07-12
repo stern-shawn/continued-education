@@ -9,7 +9,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 module.exports = (app) => {
   // DUmmy route to test if you get unauthroized if making a GET without a valid authorization header
   app.get('/', requireAuth, (req, res) => {
-    res.send({ hi: 'You are authenticated!' });
+    res.send({ message: 'Super Secret code is Hashbrowns!' });
   });
 
   app.post('/signin', requireSignin, Authentication.signin);

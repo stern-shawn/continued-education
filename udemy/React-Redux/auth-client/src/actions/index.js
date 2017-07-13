@@ -4,6 +4,7 @@ import {
   AUTH_USER,
   AUTH_ERROR,
   UNAUTH_USER,
+  FETCH_MESSAGE,
 } from './types';
 
 const API_URL = 'http://localhost:3000';
@@ -58,4 +59,16 @@ export function signoutUser() {
   localStorage.removeItem('token');
   // -Dispatch the action to set the user auth state to false
   return { type: UNAUTH_USER };
+}
+
+export function fetchMessage() {
+  return (dispatch) => {
+    axios.get(API_URL, {
+      headers: { authorization: localStorage.getItem('token') },
+    })
+      .then(res => {
+        dispatch({ type: FETCH_MESSAGE, payload: res.data.message })
+      })
+      .catch(err => console.dir(err));
+  }
 }

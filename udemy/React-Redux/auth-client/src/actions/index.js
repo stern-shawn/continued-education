@@ -22,11 +22,26 @@ export function signinUser({ email, password}) {
         browserHistory.push('/feature');
       })
       .catch(err => {
-        dispatch(authError('Bad login!')); // Update this later
+        dispatch(authError('Please check your credentials and try again')); // Update this later
       });
 
     // If the request is bad...
     // -Update the error value in the store/display it
+  }
+}
+
+export function signupUser({ email, password }) {
+  return (dispatch) => {
+    // Submit email/pass to server and attempt to create user
+    axios.post(`${API_URL}/signup`, { email, password })
+      .then(res => {
+        dispatch({ type: AUTH_USER });
+        localStorage.setItem('token', res.data.token);
+        browserHistory.push('/feature');
+      })
+      .catch(err => {
+        dispatch(authError(err.response.data.error)); // Update this later
+      });
   }
 }
 

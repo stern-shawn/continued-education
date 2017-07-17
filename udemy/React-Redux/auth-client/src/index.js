@@ -20,11 +20,12 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
 const token = localStorage.getItem('token');
+const userProfile = localStorage.getItem('userProfile');
 // If the user has a token, consider them to already be signed in
-if (token) {
+if (token && userProfile) {
   // Update state prior to render. Store has the dispatch method built in so we can dispatch actions
   // at this level of the app!
-  store.dispatch({ type: AUTH_USER });
+  store.dispatch({ type: AUTH_USER, payload: JSON.parse(userProfile) });
 }
 
 ReactDOM.render(

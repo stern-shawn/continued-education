@@ -28,12 +28,19 @@ class Header extends Component {
   }
 
   render() {
+    const {
+      userProfile,
+      userProfile: { firstName, lastName },
+      authenticated,
+    } = this.props;
+
     return (
       <nav className="navbar navbar-light">
         <Link to="/" className="navbar-brand">Redux Auth</Link>
         <ul className="nav navbar-nav">
           {this.renderLinks()}
         </ul>
+        {authenticated && userProfile && <div>{`Welcome back, ${firstName} ${lastName}!`}</div>}
       </nav>
     );
   }
@@ -41,6 +48,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   authenticated: state.auth.authenticated,
+  userProfile: state.auth.userProfile,
 });
 
 export default connect(mapStateToProps)(Header);

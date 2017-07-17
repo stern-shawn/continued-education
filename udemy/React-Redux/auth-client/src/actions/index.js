@@ -16,9 +16,10 @@ export function signinUser({ email, password}) {
       .then(res => {
         // If the credentials are good...
         // -Update state to indicate user is authenticated
-        dispatch({ type: AUTH_USER });
+        dispatch({ type: AUTH_USER, payload: res.data.userProfile });
         // -Save the JWT for later use
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('userProfile', JSON.stringify(res.data.userProfile));
         // -Redirect to /feature route
         browserHistory.push('/feature');
       })
@@ -36,8 +37,9 @@ export function signupUser({ email, password }) {
     // Submit email/pass to server and attempt to create user
     axios.post(`${API_URL}/signup`, { email, password })
       .then(res => {
-        dispatch({ type: AUTH_USER });
+        dispatch({ type: AUTH_USER, payload: res.data.userProfile });
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('userProfile', JSON.stringify(res.data.userProfile));
         browserHistory.push('/feature');
       })
       .catch(err => {

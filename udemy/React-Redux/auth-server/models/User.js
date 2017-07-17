@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
+const validator = require('validator');
 
+const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 // Define the model
@@ -11,8 +12,21 @@ const userSchema = new Schema({
     unique: true,
     lowercase: true,
     trim: true,
+    validate: [validator.isEmail, 'Invalid Email Address'],
+    required: 'Please supply an email address',
   },
-  password: String,
+  password: {
+    type: String,
+    required: 'Please supply a password',
+  },
+  firstName: {
+    type: String,
+    required: 'Please supply a first name',
+  },
+  lastName: {
+    type: String,
+    required: 'Please supply a last name',
+  },
 });
 
 // Pre-save hook, generate secure password before saving the model

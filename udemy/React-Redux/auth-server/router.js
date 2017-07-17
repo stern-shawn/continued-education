@@ -1,4 +1,5 @@
 const Authentication = require('./controllers/authentication');
+const validation = require('./controllers/validation');
 const passportService = require('./services/passport');
 const passport = require('passport');
 
@@ -13,5 +14,5 @@ module.exports = (app) => {
   });
 
   app.post('/signin', requireSignin, Authentication.signin);
-  app.post('/signup', Authentication.signup);
+  app.post('/signup', validation.validateSignup, Authentication.signup);
 }

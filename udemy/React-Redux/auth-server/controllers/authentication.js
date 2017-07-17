@@ -11,12 +11,20 @@ const tokenForUser = (user) => {
 exports.signin = (req, res, next) => {
   // User has already had email and password auth'd, just pass them their JWT
   // By this point, passport has injected the user object into req, at req.user
-  res.json({ token: tokenForUser(req.user) });
+  res.json({
+    token: tokenForUser(req.user),
+    userProfile: {
+      firstName: req.user.firstName,
+      lastName: req.user.lastName
+    }
+  });
 }
 
 exports.signup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
 
   if (!email || !password) {
     return res.status(422).send({ error: 'Email and password must be defined' });
@@ -32,13 +40,15 @@ exports.signup = (req, res, next) => {
       const user = new User({
         email,
         password,
+        firstName,
+        lastName,
       });
 
       // Respond to the request indicating that new user has been created
       user.save()
         .then((user) => {
           // Respond, indicating that user was created successfully
-          res.json({ token: tokenForUser(user) })
+          res.json({ token: tokenForUser(user), userProfile: { firstName, lastName } })
         })
         .catch(err => next(err));
     })

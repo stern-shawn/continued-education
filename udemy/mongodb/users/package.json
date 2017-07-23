@@ -4,7 +4,7 @@
   "description": "Section 6 of udemy mongodb course",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "nodemon --exec 'mocha -R min'"
   },
   "author": "stern-shawn",
   "license": "ISC",

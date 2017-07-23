@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 // Define the user model
 const UserSchema = new Schema({
   name: String,
+  postCount: Number,
 });
 
 // Associate this model to 'User' in mongodb and export

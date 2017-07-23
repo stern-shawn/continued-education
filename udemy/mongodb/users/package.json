@@ -1,0 +1,16 @@
+{
+  "name": "users",
+  "version": "1.0.0",
+  "description": "Section 6 of udemy mongodb course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "stern-shawn",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^3.4.2",
+    "mongoose": "^4.11.3",
+    "nodemon": "^1.11.0"
+  }
+}

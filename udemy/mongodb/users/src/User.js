@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 
 // Define the user model
 const UserSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: 'A name is required',
+  },
   postCount: Number,
 });
 

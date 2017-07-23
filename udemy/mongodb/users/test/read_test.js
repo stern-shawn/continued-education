@@ -19,4 +19,12 @@ describe('Reading records', () => {
         done();
       });
   });
+
+  it('finds a user with a particular id', (done) => {
+    User.findOne({ _id: joe._id })
+      .then((user) => {
+        assert(user.name === joe.name);
+        done();
+      });
+  });
 });

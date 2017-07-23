@@ -14,6 +14,7 @@ const UserSchema = new Schema({
     required: 'A name is required',
   },
   posts: [postSchema],
+  likes: Number,
 });
 
 // Define a 'getter', ie joe.postCount is a function that returns a value, not a primitive itself

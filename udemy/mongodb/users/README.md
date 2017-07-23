@@ -2,6 +2,12 @@
 
 In this section of the project, I'm gaining more knowledge of mongoose operations, with the added benefit of working more with Mocha for testing as I go.
 
+Note that as I write schemas, I'm using this convention to differentiate types:
+
+- Collections are capitalized camelcase, ie. Users, BlogPosts, etc
+
+- Subdocuments are normal camelcase, ie. posts
+
 ## Topics I hope to learn through this part of the course
 
 - Fleshing out and expanding existing knowledge of CRUD methods with MongoDB/Mongoose library
@@ -15,6 +21,7 @@ In this section of the project, I'm gaining more knowledge of mongoose operation
 - Relational data
 
 - Subdocuments
+  - A collection of items directly tied to another collection, as opposed to assosciating relationships with refs (still defined with its own schema)
 
 - Virtual types
 

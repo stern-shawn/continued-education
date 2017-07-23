@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const postSchema = require('./post');
 
 const Schema = mongoose.Schema;
 
@@ -13,6 +14,7 @@ const UserSchema = new Schema({
     required: 'A name is required',
   },
   postCount: Number,
+  posts: [postSchema],
 });
 
 // Associate this model to 'User' in mongodb and export

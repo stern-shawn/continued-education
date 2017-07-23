@@ -57,7 +57,7 @@ describe('Updating records', () => {
     );
   });
 
-  it('A users postCount can be incremented by 1', (done) => {
+  xit('A users postCount can be incremented by 1', (done) => {
     // We can use the $inc update operator to instruct mongodb to do the work of incrementing,
     // instead of retrieving the data and incrementing on our end. Performance win!
     // Usage: $inc: { keyToTarget: increment value (could be negative for decrement)}

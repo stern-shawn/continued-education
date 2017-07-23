@@ -13,8 +13,13 @@ const UserSchema = new Schema({
     },
     required: 'A name is required',
   },
-  postCount: Number,
   posts: [postSchema],
+});
+
+// Define a 'getter', ie joe.postCount is a function that returns a value, not a primitive itself
+// In particular, this getter returns how many posts the user has
+UserSchema.virtual('postCount').get(function () {
+  return this.posts.length;
 });
 
 // Associate this model to 'User' in mongodb and export

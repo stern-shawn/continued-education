@@ -4,7 +4,7 @@
   "description": "Section 6 of udemy mongodb course",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "stern-shawn",
   "license": "ISC",

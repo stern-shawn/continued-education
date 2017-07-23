@@ -40,4 +40,22 @@ describe('Subdocuments', () => {
         done();
       });
   });
+
+  it('can remove existing posts from a user', (done) => {
+    const joe = new User({
+      name: 'Joe',
+      posts: [{ title: 'New Title' }],
+    });
+
+    joe.save()
+      .then(() => User.findOne({ name: 'Joe' }))
+      .then((user) => {
+        user.posts[0].remove(); // Mongoose injects the remove method on elements, no splicing
+        return user.save();
+      })
+      .then((user) => {
+        assert(user.posts.length === 0);
+        done();
+      });
+  });
 });

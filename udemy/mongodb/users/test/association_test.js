@@ -36,7 +36,7 @@ describe('Associations', () => {
       });
   });
 
-  it.only('saves a full relation tree (user -> blogPosts -> comments -> authors', (done) => {
+  it('saves a full relation tree (user -> blogPosts -> comments -> authors', (done) => {
     User.findOne({ name: 'Joe' })
       // We can pass populate an object which defines which properties to trace down
       // Each time we go down one layer, we need to also define the Schema (normal casing)

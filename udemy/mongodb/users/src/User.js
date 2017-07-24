@@ -15,6 +15,10 @@ const UserSchema = new Schema({
   },
   posts: [postSchema],
   likes: Number,
+  blogPosts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'BlogPost',
+  }],
 });
 
 // Define a 'getter', ie joe.postCount is a function that returns a value, not a primitive itself

@@ -47,4 +47,6 @@ Note that as I write schemas, I'm using this convention to differentiate types:
 
 - IDs in MongoDB are actually of type ObjectId, and aren't actually Strings, making comparison just by === a simple mistake (need to use .toString() on the objects first)
 
+- Want a faster testing experience? :rocket: You can replace it() with it.only() and Mocha will only execute that one test. Great for if you're developing a new test within a larger suite that takes a long time to run and don't want every other test taking up execution time.
+
 - _...more to come..._

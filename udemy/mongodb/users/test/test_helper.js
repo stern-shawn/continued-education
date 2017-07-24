@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 // Wrap connection in a before block with done callback to ensure connection before
 // continuing to tests
 before((done) => {
-  mongoose.connect(process.env.MONGODB, {
+  mongoose.connect('mongodb://localhost/users_test', {
     useMongoClient: true, // To get rid of the deprecation warning for connect() without config
   });
 

@@ -17,11 +17,20 @@ describe('Associations', () => {
     // with the correct ref type as just adding the object's id. Same goes for assigning directly
     // as is the case with the comment.author field because the type is ObjectId
     joe.blogPosts.push(blogPost);
-    blogPost.coments.push(comment);
+    blogPost.comments.push(comment);
     comment.author = joe;
 
     // Actually save these to the database, which we can do in parallel to save time!
     Promise.all([joe.save(), blogPost.save(), comment.save()])
       .then(() => done());
+  });
+
+  it('saves a relation between a user and their blog posts', (done) => {
+    User.findOne({ name: 'Joe' })
+      .populate('blogPosts') // Populates blogPosts field as actual objects instead of ObjectId vals
+      .then((user) => {
+        assert(user.blogPosts[0].title === 'MongoDB is great');
+        done();
+      });
   });
 });

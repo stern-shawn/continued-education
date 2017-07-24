@@ -5,7 +5,9 @@ const Comment = require('../src/Comment.js');
 const BlogPost = require('../src/BlogPost.js');
 
 describe('Associations', () => {
-  let joe, blogPost, comment;
+  let joe;
+  let blogPost;
+  let comment;
 
   beforeEach((done) => {
     // Separately initialize all of our basic collections...
@@ -30,6 +32,31 @@ describe('Associations', () => {
       .populate('blogPosts') // Populates blogPosts field as actual objects instead of ObjectId vals
       .then((user) => {
         assert(user.blogPosts[0].title === 'MongoDB is great');
+        done();
+      });
+  });
+
+  it.only('saves a full relation tree (user -> blogPosts -> comments -> authors', (done) => {
+    User.findOne({ name: 'Joe' })
+      // We can pass populate an object which defines which properties to trace down
+      // Each time we go down one layer, we need to also define the Schema (normal casing)
+      // Also mind the pluralizing for arrays, vs non-plural for single fields
+      .populate({
+        path: 'blogPosts',
+        populate: {
+          path: 'comments',
+          model: 'Comment',
+          populate: {
+            path: 'author',
+            model: 'User',
+          },
+        },
+      })
+      .then((user) => {
+        assert(user.name === 'Joe');
+        assert(user.blogPosts[0].title === 'MongoDB is great');
+        assert(user.blogPosts[0].comments[0].content === 'Good job recognizing this fact!');
+        assert(user.blogPosts[0].comments[0].author.name === 'Joe');
         done();
       });
   });

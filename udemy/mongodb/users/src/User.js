@@ -28,15 +28,15 @@ UserSchema.virtual('postCount').get(function () {
 });
 
 // Define a pre-remove middleware to clean up the user's blog posts before removing the User record
-UserSchema.pre('remove', function (next) {
+UserSchema.pre('remove', async function (next) {
   // Bring in our BlogPost model with mongoose, don't import directly!
   const BlogPost = mongoose.model('BlogPost');
 
   // Look at all blog posts
   // Look at the id of each post
   // If the id is contained in the array blogPosts, perform the op (.remove)
-  BlogPost.remove({ _id: { $in: this.blogPosts } })
-    .then(() => next());
+  await BlogPost.remove({ _id: { $in: this.blogPosts } });
+  next();
 });
 
 // Associate this model to 'User' in mongodb and export

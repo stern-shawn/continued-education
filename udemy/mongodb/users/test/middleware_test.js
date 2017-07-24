@@ -16,12 +16,9 @@ describe('User Middlewares', () => {
       .then(() => done());
   });
 
-  it('automatically removes dangling BlogPosts when the User is removed', (done) => {
-    joe.remove()
-      .then(() => BlogPost.count()) // Returns # of BlogPosts in entire collection
-      .then((count) => {
-        assert(count === 0);
-        done();
-      });
+  it('automatically removes dangling BlogPosts when the User is removed', async () => {
+    await joe.remove();
+    const count = await BlogPost.count(); // Returns # of BlogPosts in entire collection
+    assert(count === 0);
   });
 });

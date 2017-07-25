@@ -1,4 +1,6 @@
-const Driver = require('../models/Driver');
+const mongoose = require('mongoose');
+
+const Driver = mongoose.model('Driver');
 
 exports.greeting = (req, res) => {
   res.json({ hi: 'welcome' });

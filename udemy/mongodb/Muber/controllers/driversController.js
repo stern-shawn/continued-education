@@ -5,6 +5,7 @@ exports.greeting = (req, res) => {
 };
 
 exports.createDriver = (req, res) => {
-  console.log(req.body);
-  res.json(req.body);
-};
+  const driverProps = req.body;
+  Driver.create(req.body)
+    .then(driver => res.json(driver));
+  };

@@ -13,8 +13,11 @@ module.exports = (criteria, sortProperty, offset = 0, limit = 20) => {
     .sort({ [sortProperty]: 1 })
     .skip(offset)
     .limit(limit);
-
-  return Promise.all([query, Artist.count()])
+  
+  // Unfortunately we can't get the count AND paginate the response in one query
+  // therefore we will need to do the same find operation twice: once with .count() to get # of
+  // results, and again with the .sort/.skip/.limit pagination setup to actually return the data
+  return Promise.all([query, Artist.find(buildQuery(criteria)).count()])
     .then(([all, count]) => ({ all, count, offset, limit }));
 };
 

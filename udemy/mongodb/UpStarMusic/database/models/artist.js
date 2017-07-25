@@ -16,4 +16,9 @@ const ArtistSchema = new Schema({
   albums: [AlbumSchema],
 });
 
+// Define some indexes to support text searches
+ArtistSchema.index({
+  name: 'text',
+});
+
 module.exports = mongoose.model('Artist', ArtistSchema);

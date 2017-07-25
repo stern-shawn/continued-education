@@ -6,7 +6,7 @@ const app = require('../../app');
 const Driver = mongoose.model('Driver');
 
 describe('Drivers controller', () => {
-  it('Post to /api/drivers creates a new driver', (done) => {
+  it('POST to /api/drivers creates a new driver', (done) => {
     Driver.count().then(count => {
       request(app)
         .post('/api/drivers')
@@ -18,5 +18,23 @@ describe('Drivers controller', () => {
           });
         });
     });
+  });
+
+  it('PUT to /api/drivers edits an existing driver', (done) => {
+    const driver = new Driver({ email: 't@t.com', driving: false });
+
+    driver.save()
+      .then(() => {
+        request(app)
+        .put(`/api/drivers/${driver._id}`)
+        .send({ driving: true })
+        .end(() => {
+          Driver.findById(driver._id)
+            .then(updatedDriver => {
+              assert(updatedDriver.driving === true);
+              done();
+            });
+        });
+      });
   });
 })

@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 
 const Driver = mongoose.model('Driver');
 
-exports.greeting = (req, res) => {
-  res.json({ hi: 'welcome' });
-};
-
 exports.createDriver = (req, res, next) => {
   const driverProps = req.body;
   Driver.create(req.body)
@@ -23,7 +19,7 @@ exports.editDriver = (req, res, next) => {
   Driver.findByIdAndUpdate(id, driverProps, { new: true })
     .then(driver => res.json(driver))
     .catch(next);
-  };
+};
 
 exports.deleteDriver = (req, res, next) => {
   const id = req.params.id;
@@ -32,4 +28,4 @@ exports.deleteDriver = (req, res, next) => {
   Driver.findByIdAndRemove(id)
     .then(driver => res.status(204).json(driver))
     .catch(next);
-  };
+};

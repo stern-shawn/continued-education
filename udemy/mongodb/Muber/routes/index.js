@@ -7,5 +7,6 @@ router.get('/api', driversController.greeting);
 
 router.post('/api/drivers', driversController.createDriver);
 router.put('/api/drivers/:id', driversController.editDriver);
+router.delete('/api/drivers/:id', driversController.deleteDriver);
 
 module.exports = router;

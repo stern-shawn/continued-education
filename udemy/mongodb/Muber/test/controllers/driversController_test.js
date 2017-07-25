@@ -21,20 +21,37 @@ describe('Drivers controller', () => {
   });
 
   it('PUT to /api/drivers edits an existing driver', (done) => {
-    const driver = new Driver({ email: 't@t.com', driving: false });
+    const driver = new Driver({ email: 'test@test.com' });
 
     driver.save()
       .then(() => {
         request(app)
-        .put(`/api/drivers/${driver._id}`)
-        .send({ driving: true })
-        .end(() => {
-          Driver.findById(driver._id)
-            .then(updatedDriver => {
-              assert(updatedDriver.driving === true);
-              done();
-            });
-        });
+          .put(`/api/drivers/${driver._id}`)
+          .send({ driving: true })
+          .end(() => {
+            Driver.findById(driver._id)
+              .then(updatedDriver => {
+                assert(updatedDriver.driving === true);
+                done();
+              });
+          });
+      });
+  });
+
+  it('DELETE to /api/drivers removes an existing driver', (done) => {
+    const driver = new Driver({ email: 'test@test.com' });
+
+    driver.save()
+      .then(() => {
+        request(app)
+          .delete(`/api/drivers/${driver._id}`)
+          .end(() => {
+            Driver.findById(driver._id)
+              .then(driver => {
+                assert(driver === null);
+                done();
+              });
+          });
       });
   });
 })

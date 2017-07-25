@@ -22,3 +22,12 @@ exports.editDriver = (req, res, next) => {
     .then(driver => res.json(driver))
     .catch(next);
   };
+
+exports.deleteDriver = (req, res, next) => {
+  const id = req.params.id;
+
+  // Use status code 204 to indicate successful removal and return the now-removed driver
+  Driver.findByIdAndRemove(id)
+    .then(driver => res.status(204).json(driver))
+    .catch(next);
+  };

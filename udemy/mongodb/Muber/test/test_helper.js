@@ -27,7 +27,7 @@ after((done) => {
 // Helper function for refactoring common cleanup code
 const cleanupDrivers = done => {
   const { drivers } = mongoose.connection.collections;
-  drivers.drop(() => {
-    done();
-  });
+  drivers.drop()
+    .then(() => done())
+    .catch(() => done());
 }

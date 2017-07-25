@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.get('/api', driversController.greeting);
 
+router.post('/api/drivers', driversController.createDriver);
+
 module.exports = router;

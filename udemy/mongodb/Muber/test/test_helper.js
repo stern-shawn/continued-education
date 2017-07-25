@@ -28,6 +28,9 @@ after((done) => {
 const cleanupDrivers = done => {
   const { drivers } = mongoose.connection.collections;
   drivers.drop()
+    // The 2dsphere index is only created on the first initialization of the Driver schema,
+    // we need to ensure it's there between each refresh to make sure it's available...
+    .then(() => drivers.ensureIndex({ 'location.coordinates': '2dsphere' }))
     .then(() => done())
     .catch(() => done());
 }

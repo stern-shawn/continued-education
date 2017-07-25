@@ -1,6 +1,17 @@
-const mongoose = require('mongoose');
+ const Driver = require('../models/Driver');
 
-const Driver = mongoose.model('Driver');
+exports.indexDrivers = (req, res, next) => {
+  // Convert lng/lat queries into an array of two floats, because query fields are cast to strings
+  const { lng, lat } = req.query;
+  const coordinates = [lng, lat].map(parseFloat);
+
+  Driver.geoNear(
+    { type: 'Point', coordinates },
+    { spherical: true, maxDistance: 200000 },
+  )
+    .then(drivers => res.json(drivers))
+    .catch(next);
+};
 
 exports.createDriver = (req, res, next) => {
   const driverProps = req.body;

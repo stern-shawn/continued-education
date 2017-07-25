@@ -12,7 +12,16 @@ const DriverSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  // Location: {}
+  location: {
+    type: { // Special format for declaring geolocation type
+      type: String,
+      default: 'Point',
+    },
+    coordinates: {
+      type: [Number],
+      index: '2dsphere',
+    },
+  },
 });
 
 module.exports = mongoose.model('Driver', DriverSchema);

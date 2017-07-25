@@ -13,5 +13,9 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use(bodyParser.json());
 app.use('/', routes);
+// Error handler middleware for if previous middleware threw an error
+app.use((err, req, res, next) => {
+  res.status(422).json({ error: err.message });
+});
 
 module.exports = app;

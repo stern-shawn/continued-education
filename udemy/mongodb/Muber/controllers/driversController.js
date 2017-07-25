@@ -4,8 +4,9 @@ exports.greeting = (req, res) => {
   res.json({ hi: 'welcome' });
 };
 
-exports.createDriver = (req, res) => {
+exports.createDriver = (req, res, next) => {
   const driverProps = req.body;
   Driver.create(req.body)
-    .then(driver => res.json(driver));
+    .then(driver => res.json(driver))
+    .catch(next);
   };

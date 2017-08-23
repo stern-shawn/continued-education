@@ -30,19 +30,17 @@ input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}b
 
 /* We start writing out flexbox here. The above is just page setup */
 .container {
-  display:flex;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
-.box1 {
-  /* flex-basis: 400px;
-  flex-grow: 2;
-  flex-shrink: 10; */
-  flex: 5 10 400px;
-}
-
-.box2 {
-  /* flex-basis: 400px;
+.box {
+  flex-basis: 225px;
   flex-grow: 1;
-  flex-shrink: 1; */
-  flex: 1 1 400px;
+}
+
+.box4 {
+  flex-grow: 10;
 }

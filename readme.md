@@ -1,3 +1,5 @@
-# Markdown Practice
+# Continued Education Projects
 
-A simple repo to practice and improve my use of Markdown for better documentation and communication with teammates over GitHub and other channels.
+This repo includes side projects that arise from courses or tutorials on udemy, egghead.io, and the like as I continue to grow my knowledge in areas of interest such as JavaScript, React, Node, and databases.
+
+More details to come.

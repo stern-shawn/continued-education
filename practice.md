@@ -18,7 +18,7 @@ Link to my blog with angle brackets: <https://stern-shawn.github.io>
 
 [My Blog Using Tokens!][1]
 
-#Images
+# Images
 
 ![Images!](http://unsplash.it/500/500?random "This is a tooltip example")
 
@@ -62,7 +62,7 @@ Nested OLs + inline content
 1. The next step after that...
 1. Final step?
 
-#Who Doesn't Like Horizontal Rules?
+# Who Doesn't Like Horizontal Rules?
 
 ---
 
@@ -71,6 +71,31 @@ How about quotes?
 > You miss 100% of the shots you don't take
 >
 > -_Wayne Gretzky_
+
+# Code Blocks
+
+Define the highlighting with three backticks and an optional language definition
+```js
+const bar = {
+  foo: 'hello, joe',
+  baz: 'nobody likes baz',
+};
+
+const { foo } = bar; // Destructuring
+console.log(`I really wanna say ${foo}`) // String template literals
+```
+
+Sometimes you'd rather talk about `const x = 100` inline...
+
+## Diffs
+
+You can also use markdown to emulate code diffs!
+
+```diff
+const x = 100;
+- const y = 200;
++ const y = 300;
+```
 
 [1]: https://stern-shawn.github.io
 [puppy]: http://unsplash.it/500/500?image=1012

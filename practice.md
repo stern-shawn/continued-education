@@ -97,6 +97,19 @@ const x = 100;
 + const y = 300;
 ```
 
+# Tables
+
+You can use the placement of colons to control alignment in a table, ex.
+
+- :-- (left)
+- :-: (center)
+- --: (right)
+
+|Name (Centered)|Age (Left Aligned)|
+|:--:|:--|
+|Shawn|26|
+|Kip|40|
+
 [1]: https://stern-shawn.github.io
 [puppy]: http://unsplash.it/500/500?image=1012
 [random100]: http://unsplash.it/100/100?random

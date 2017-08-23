@@ -110,6 +110,16 @@ You can use the placement of colons to control alignment in a table, ex.
 |Shawn|26|
 |Kip|40|
 
+# Github Bonuses
+
+Todo List
+- [x] Learn More Markdown
+- [x] Get better at communication and documentation
+- [ ] ???
+- [ ] Profit
+
+Reference to a problem in issue #51, lemmie know what you think @githubUser
+
 [1]: https://stern-shawn.github.io
 [puppy]: http://unsplash.it/500/500?image=1012
 [random100]: http://unsplash.it/100/100?random

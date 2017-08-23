@@ -18,7 +18,7 @@ Link to my blog with angle brackets: <https://stern-shawn.github.io>
 
 [My Blog Using Tokens!][1]
 
-
+#Images
 
 ![Images!](http://unsplash.it/500/500?random "This is a tooltip example")
 
@@ -31,7 +31,37 @@ We can also use an image as a link!
 
 If that syntax is too strange, you can always just use the normal HTML syntax...
 
-[<img src="http://unsplash.it/50/50?image=1012"/>][puppy]
+[<img src="http://unsplash.it/100/100?image=1012"/>][puppy]
+
+# Lists
+
+Standard unordered list with nesting
+- eggs
+  - take from chicken
+    - avoid getting pecked or something
+- milk
+- flour
+
+Ordered list, note that you don't need to manually number the elements, the parser will do this for you so you don't need manual updates whenever you change the list order or add new elements out of order...
+
+1. Hey
+1. Ho
+1. Let's go
+
+Nested OLs + inline content
+
+1. do the first step
+    - Sub-step of the first step
+
+        Inline content!
+        ![][random100]
+
+        ```js
+          const foo = 'bar'
+        ```
+1. The next step after that...
+1. Final step?
 
 [1]: https://stern-shawn.github.io
 [puppy]: http://unsplash.it/500/500?image=1012
+[random100]: http://unsplash.it/100/100?random

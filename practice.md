@@ -62,6 +62,16 @@ Nested OLs + inline content
 1. The next step after that...
 1. Final step?
 
+#Who Doesn't Like Horizontal Rules?
+
+---
+
+How about quotes?
+
+> You miss 100% of the shots you don't take
+>
+> -_Wayne Gretzky_
+
 [1]: https://stern-shawn.github.io
 [puppy]: http://unsplash.it/500/500?image=1012
 [random100]: http://unsplash.it/100/100?random

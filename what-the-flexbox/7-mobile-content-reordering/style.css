@@ -90,4 +90,21 @@ section, footer {
   .flex-nav li {
     flex-basis: 100%;
   }
+
+  /* Our flex container */
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Flex items, ie all immediate children of the wrapper */
+  .wrapper > * {
+    order: 1;
+  }
+
+  .flex-nav {
+    order: 0;
+  }
+
+
 }

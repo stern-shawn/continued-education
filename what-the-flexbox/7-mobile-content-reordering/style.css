@@ -106,5 +106,16 @@ section, footer {
     order: 0;
   }
 
+  .toggleNav {
+    display: block;
+  }
+
+  .flex-nav ul {
+    display: none;
+  }
+
+  .flex-nav ul.open {
+    display: flex;
+  }
 
 }

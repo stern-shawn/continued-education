@@ -45,8 +45,8 @@ a:hover {
 /* First level of flex items  */
 .slider-nav li {
   flex: 5;
-  border: 1px solid red;
   text-align: center;
+  display: flex;
 }
 
 .slider-nav .arrow {
@@ -54,6 +54,15 @@ a:hover {
 }
 
 .slider-nav a {
-  display: block;
-  width: 100%;
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.slider-nav span {
+  flex-basis: 100%;
+}
+
+.arrow a {
+  font-size: 30px;
 }

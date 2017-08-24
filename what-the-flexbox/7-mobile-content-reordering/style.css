@@ -64,13 +64,30 @@ section, footer {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
 }
+
+.flex-nav li {
+  flex: 3;
+}
+
+.flex-nav li.social {
+  flex: 1;
+}
+
 
 @media all and (max-width:1000px) {
+  .flex-nav ul {
+    flex-wrap: wrap;
+  }
 
+  .flex-nav li {
+    flex: 1 1 50%;
+  }
 }
 
-
 @media all and (max-width:500px) {
-  
+  .flex-nav li {
+    flex-basis: 100%;
+  }
 }

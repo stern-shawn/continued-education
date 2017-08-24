@@ -99,7 +99,7 @@ section, footer {
 
   /* Flex items, ie all immediate children of the wrapper */
   .wrapper > * {
-    order: 1;
+    order: 4;
   }
 
   .flex-nav {
@@ -116,6 +116,17 @@ section, footer {
 
   .flex-nav ul.open {
     display: flex;
+  } 
+
+  .top {
+    order: 1;
   }
 
+  .details {
+    order: 2;
+  }
+
+  .signup {
+    order: 3;
+  }
 }

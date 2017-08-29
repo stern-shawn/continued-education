@@ -12,6 +12,7 @@ import {
   Text,
   View,
   Model,
+  VrButton,
 } from 'react-vr';
 
 const Tree = (props) => {
@@ -102,6 +103,18 @@ export default class app extends React.Component {
             layoutOrigin: [0.5, 0.5],
           }}
         />
+        <VrButton
+          onClick={() => { console.log('clicked') }}
+          onLongClick={() => { console.log('clicked longly') }}
+          onButtonPress={() => { console.log('pressed') }}
+          onButtonRelease={() => { console.log('released') }}
+          style={{
+            layoutOrigin: [0.5, 0.5],
+            transform: [{ translate: [1, 1, -1] }],
+          }}
+        >
+          <Text style={{ color: 'black', }}>Update!</Text>
+        </VrButton>
         <View
           style={{
             width: 2,
@@ -110,6 +123,10 @@ export default class app extends React.Component {
             layoutOrigin: [0.5, 0.5],
             transform: [{ translate: [0, 0, -3] }],
             justifyContent: 'space-between',
+          }}
+          onInput={ (e) => {
+            console.log('type', e.nativeEvent.inputEvent.type);
+            console.log('eventType', e.nativeEvent.inputEvent.eventType);
           }}
         >
           <Image

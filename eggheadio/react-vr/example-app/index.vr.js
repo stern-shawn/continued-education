@@ -5,6 +5,9 @@ import {
   Image,
   Pano,
   PointLight,
+  AmbientLight,
+  DirectionalLight,
+  SpotLight,
   Sphere,
   Box,
   Cylinder,
@@ -19,9 +22,11 @@ export default class app extends React.Component {
       <View>
         <Pano source={asset('chess-world.jpg')} />
         <PointLight
-          intensity={1}
+          intensity={2}
+          decay={2}
+          distance={40}
           style={{
-            transform: [{ translate: [0, 700, 700] }],
+            transform: [{ translate: [0, 0, 10] }],
           }}
         />
         <Sphere

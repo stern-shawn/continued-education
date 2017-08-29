@@ -4,6 +4,11 @@ import {
   asset,
   Image,
   Pano,
+  PointLight,
+  Sphere,
+  Box,
+  Cylinder,
+  Plane,
   Text,
   View,
 } from 'react-vr';
@@ -13,6 +18,57 @@ export default class app extends React.Component {
     return (
       <View>
         <Pano source={asset('chess-world.jpg')} />
+        <PointLight
+          intensity={1}
+          style={{
+            transform: [{ translate: [0, 700, 700] }],
+          }}
+        />
+        <Sphere
+          style={{
+            color: 'lightblue',
+            layoutOrigin: [0.5, 0.5],
+            transform: [{ translate: [-2, -1, -2] }]
+          }}
+          lit
+          texture={asset('earthTexture.jpg')}
+          heightSegments={20}
+          widthSegments={20}
+          radius={0.5}
+        />
+        <Box
+          dimWidth={0.5}
+          dimHeight={0.5}
+          dimDepth={0.5}
+          lit
+          style={{
+            color: 'orchid',
+            transform: [{ translate: [2, -1 ,-2] }],
+            layoutOrigin: [0.5, 0.5],
+          }}
+        />
+        <Cylinder
+          segments={65}
+          dimHeight={0.6}
+          radiusBottom={0.35}
+          radiusTop={0}
+          lit
+          style={{
+            color: 'orangered',
+            transform: [{ translate: [2, 1 ,-2] }],
+            layoutOrigin: [0.5, 0.5],
+          }}
+        />
+        <Plane
+          dimWidth={0.6}
+          dimHeight={0.6}
+          lit
+          style={{
+            color: 'green',
+            transform: [{ translate: [-2, 1 ,-2] }],
+            layoutOrigin: [0.5, 0.5],
+          }}
+        />
         <View
           style={{
             width: 2,

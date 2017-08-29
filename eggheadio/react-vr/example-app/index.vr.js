@@ -13,7 +13,10 @@ import {
   View,
   Model,
   VrButton,
+  Animated,
 } from 'react-vr';
+
+const AnimatedSphere = Animated.createAnimatedComponent(Sphere);
 
 const Tree = (props) => {
   return (
@@ -33,6 +36,24 @@ const Tree = (props) => {
 }
 
 export default class app extends React.Component {
+  state = {
+    fadeIn: new Animated.Value(0),
+    rotation: new Animated.Value(0),
+    springValue: new Animated.Value(-1),
+  }
+
+  componentDidMount() {
+    // Animations in parallel AND sequenced!
+    Animated.parallel([
+      Animated.sequence([
+        Animated.timing(this.state.fadeIn, { toValue: 1, duration: 3000 }),
+        Animated.delay(1000),
+        Animated.spring(this.state.springValue, { toValue: 0 }),
+      ]),
+      Animated.timing(this.state.rotation, { toValue: 1000, duration: 100000 }),
+    ]).start();
+  }
+  
   render() {
     return (
       <View>
@@ -47,11 +68,11 @@ export default class app extends React.Component {
             transform: [{ translate: [0, 0, 10] }],
           }}
         />
-        <Sphere
+        <AnimatedSphere
           style={{
             color: 'lightblue',
             layoutOrigin: [0.5, 0.5],
-            transform: [{ translate: [-2, -1, -2] }]
+            transform: [{ translate: [-2, -1, -2] }, { rotateY: this.state.rotation }]
           }}
           lit
           texture={asset('earthTexture.jpg')}
@@ -115,13 +136,14 @@ export default class app extends React.Component {
         >
           <Text style={{ color: 'black', }}>Update!</Text>
         </VrButton>
-        <View
+        <Animated.View
           style={{
             width: 2,
             height: 2.4,
             backgroundColor: 'white',
             layoutOrigin: [0.5, 0.5],
-            transform: [{ translate: [0, 0, -3] }],
+            transform: [{ translateZ: -3 }, { translateY: this.state.springValue }],
+            opacity: this.state.fadeIn,
             justifyContent: 'space-between',
           }}
           onInput={ (e) => {
@@ -163,7 +185,7 @@ export default class app extends React.Component {
             />
           </View>
 
-        </View>
+        </Animated.View>
       </View>
     );
   }

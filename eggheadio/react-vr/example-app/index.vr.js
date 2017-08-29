@@ -5,15 +5,13 @@ import {
   Image,
   Pano,
   PointLight,
-  AmbientLight,
-  DirectionalLight,
-  SpotLight,
   Sphere,
   Box,
   Cylinder,
   Plane,
   Text,
   View,
+  Model,
 } from 'react-vr';
 
 export default class app extends React.Component {
@@ -48,7 +46,7 @@ export default class app extends React.Component {
           lit
           style={{
             color: 'orchid',
-            transform: [{ translate: [2, -1 ,-2] }],
+            transform: [{ translate: [2, -1, -2] }],
             layoutOrigin: [0.5, 0.5],
           }}
         />
@@ -60,7 +58,7 @@ export default class app extends React.Component {
           lit
           style={{
             color: 'orangered',
-            transform: [{ translate: [2, 1 ,-2] }],
+            transform: [{ translate: [2, 1, -2] }],
             layoutOrigin: [0.5, 0.5],
           }}
         />
@@ -70,7 +68,18 @@ export default class app extends React.Component {
           lit
           style={{
             color: 'green',
-            transform: [{ translate: [-2, 1 ,-2] }],
+            transform: [{ translate: [-2, 1, -2] }],
+            layoutOrigin: [0.5, 0.5],
+          }}
+        />
+        <Model
+          source={{
+            obj: asset('Dog.obj'),
+          }}
+          lit
+          texture={asset('chess-world.jpg')}
+          style={{
+            transform: [{ translate: [-4, -3, -2]}, ],
             layoutOrigin: [0.5, 0.5],
           }}
         />

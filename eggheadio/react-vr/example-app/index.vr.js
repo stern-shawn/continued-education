@@ -14,11 +14,30 @@ import {
   Model,
 } from 'react-vr';
 
+const Tree = (props) => {
+  return (
+    <View style={props.style}>
+      <Sphere
+        lit
+        style={{ color: 'green', transform: [{ translateY: 0.8 }] }}
+      />
+      <Cylinder
+        lit
+        style={{ color: 'brown' }}
+        radiusBottom={0.05}
+        radiusTop={0.05}
+      />
+    </View>
+  )
+}
+
 export default class app extends React.Component {
   render() {
     return (
       <View>
         <Pano source={asset('chess-world.jpg')} />
+        <Tree style={{ transform: [{ translate: [3, -2, -1] }] }} />
+        <Tree style={{ transform: [{ translate: [3, -2, -2.1] }] }} />
         <PointLight
           intensity={2}
           decay={2}

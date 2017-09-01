@@ -32,49 +32,62 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
     const oldInventors = inventors.filter(inventor => inventor.year < 1600 && inventor.year >= 1500);
+    console.table(oldInventors);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
-    const namesOnly = inventors.map(({first, last}) => ({ first, last }));
+    const namesOnly = inventors.map(({first, last}) => `${first} ${last}`);
+    console.log(namesOnly);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
     const old2young = inventors.sort((a, b) => a.year - b.year);
+    console.log(old2young);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
-    const lifeSpanAll = inventors.reduce((all, inventor) => all + (inventor.passed - inventor.year), 0);
+    const lifeSpanAll = inventors.reduce((total, inventor) => total + (inventor.passed - inventor.year), 0);
+    console.log(lifeSpanAll);
 
     // 5. Sort the inventors by years lived
-    const longestLives = inventors.sort((a, b) => (a.passed - a.year) - (b.passed - b.year));
+    const longestLives = inventors.sort((a, b) => (b.passed - b.year) - (a.passed - a.year));
+    console.log(longestLives);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    // Run the code below in the console of the Wikipedia article above
+    const links = [...document.querySelectorAll('.mw-category a')];
+    const de = links
+                .map(link => link.textContent)
+                .filter(streetName => streetName.includes('de'));
+    console.log(de);
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
     const lastPeople = people.sort((a, b) => {
-      const nameA = a.split(', ')[0];
-      const nameB = b.split(', ')[0];
+      // Bonus destructuring
+      const [ nameA ] = a.toLowerCase().split(', ');
+      const [ nameB ] = b.toLowerCase().split(', ');
 
-      return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+      // Bonus, use localeCompare built0in fn instead of manually doing ternary + comparison
+      return nameA.localeCompare(nameB);
     });
+    console.log(lastPeople);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
-    const counts = data.reduce((acc, curr) => {
-      // If the current vehicle type is already tracked, increment it. Otherwise initialize the count for a new vehicle
-      if (curr in acc) {
-        acc[curr] = acc[curr] + 1;
-      } else {
-        acc[curr] = 1;
+    const counts = data.reduce((acc, type) => {
+      // Initialize the count for a new vehicle if necessary, and increment the count for the current vehicle type
+      if (!acc[type]) {
+        acc[type] = 0;
       }
+      acc[type]++;
 
       return acc;
     }, {});
+    console.log(counts);
   </script>
 </body>
 </html>

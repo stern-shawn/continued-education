@@ -128,14 +128,14 @@
     const panels = document.querySelectorAll('.panel');
 
     // Focus the selected panel and shrink all others. Toggle this one closed if already open
-    function toggleOpen() {
-      this.classList.toggle('open');
+    const toggleOpen = (e) => {
+      e.currentTarget.classList.toggle('open');
     }
 
-    function toggleActive(e) {
+    const toggleActive = (e) => {
       if (!e.propertyName.includes('flex')) return;
       // Only toggle on flex-type transitions since multiple events will fire for one change
-      this.classList.toggle('open-active');
+      e.currentTarget.classList.toggle('open-active');
     }
 
     panels.forEach(panel => panel.addEventListener('click', toggleOpen));

@@ -28,6 +28,8 @@
   });
 
   const displayMatches = (e) => {
+    if (e.currentTarget.value === '') return suggestions.innerHTML = '<li>Filter for a city</li><li>or a state</li>';
+
     const matches = findMatches(e.currentTarget.value, cities);
     const html = matches
                   .map(place => {

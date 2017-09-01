@@ -74,17 +74,17 @@
 
   const removeTransition = (e) => {
     // Ignore events other than type 'transform'
-    if (e.propertyName !== 'transform') return;
+    // if (e.propertyName !== 'transform') return;
     e.srcElement.classList.remove('playing');
   }
 
   window.addEventListener('keydown', playSound);
 
   // Instead of using setTimeout to remove the playing class, we can fire on the 'transitionend' event!
-  const keys = document.querySelectorAll('.key');
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  // The event bubbles, so we can listen for it on the parent instead of needing per-key listeners
+  const key = document.querySelector('.keys');
+  key.addEventListener('transitionend', removeTransition);
 </script>
-
 
 </body>
 </html>

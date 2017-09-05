@@ -99,6 +99,28 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll(".inbox input[type='checkbox'");
+  let lastChecked;
+
+  function handleCheck(e) {
+    // Check if shift key is being held down AND that they are 'checking' instead of 'unchecking'
+    if (e.shiftKey && this.checked) {
+      // Flag for if between lastChecked checkbox and the currently being checked box
+      let inBetween = false;
+      checkboxes.forEach(checkbox => {
+        // Toggle the flag only on this checkbox OR the most recently checked box
+        // This enables us to check-all regardless of direction
+        if (checkbox === this || checkbox === lastChecked) inBetween = !inBetween;
+
+        // Check a box if it is 'inBetween'
+        if (inBetween) checkbox.checked = true;
+      });
+    }
+
+    lastChecked = this;
+  }
+
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
 </script>
 </body>
 </html>

@@ -24,19 +24,16 @@
       { text: 'Nice Nice Nice!', id: 542328 }
     ];
 
+    // Return true if given person is at least 19 years old
+    const isAdult = (person) => (new Date()).getFullYear() - person.year >= 19;
+
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
-    const isAdult = people.some((person) => {
-      const currentYear = (new Date()).getFullYear();
-      return currentYear - person.year >= 19;
-    });
-    console.log({ isAdult });
+    const anyAdults = people.some(isAdult);
+    console.log({ anyAdults });
 
     // Array.prototype.every() // is everyone 19 or older?
-    const allAdults = people.every((person) => {
-      const currentYear = (new Date()).getFullYear();
-      return currentYear - person.year >= 19;
-    });
+    const allAdults = people.every(isAdult);
     console.log({ allAdults });
 
     // Array.prototype.find()

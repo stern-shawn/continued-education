@@ -7,6 +7,23 @@
 </head>
 <body>
 <script>
+  const pressed = [];
+  const secret = 'wes';
+
+  window.addEventListener('keyup', (e) => {
+    pressed.push(e.key);
+    // Only track enough presses to match the secret sequence
+    if (pressed.length > secret.length) {
+      // Tutorial uses splice(), opting to use shift() instead for readibility + performance
+      // ref: https://stackoverflow.com/a/10742428
+      pressed.shift();
+    }
+
+    // If the sequence has been completed, add a freakin' unicorn!
+    if (pressed.join('').includes(secret)) {
+      cornify_add();
+    }
+  });
 </script>
 </body>
 </html>

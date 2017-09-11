@@ -58,6 +58,23 @@
       };
     }
 
+    const sliderImages = document.querySelectorAll('.slide-in');
+
+    function checkSlide(e) {
+      sliderImages.forEach(slideImage => {
+        // Find the absolute point on the page where the midpoint and bottom of the photo are
+        const slideInAt = (window.scrollY + window.innerHeight) - (slideImage.height / 2);
+        const imageBottom = slideImage.offsetTop + slideImage.height;
+        // Booleans to represent once more than half of the image is in view, and when all of it has been scrolled past
+        const isHalfShown = slideInAt > slideImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+        // Based on these conditions, either add or remove the scrolled-in class
+        (isHalfShown && isNotScrolledPast) ? slideImage.classList.add('active') : slideImage.classList.remove('active');
+      });
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide));
+
   </script>
 
   <style>

@@ -8,6 +8,7 @@ const ajax = (term) => Observable.ajax.getJSON(search(term));
 
 const searchBeersEpic = action$ => 
   action$.ofType(SEARCHED_BEERS)
+    .debounceTime(500)
     .switchMap(({ payload }) =>
       ajax(payload)
         .map(receiveBeers)

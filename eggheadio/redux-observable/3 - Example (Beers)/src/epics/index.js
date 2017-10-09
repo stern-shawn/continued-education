@@ -12,6 +12,7 @@ const ajax = (term) =>
 const searchBeersEpic = action$ =>
   action$.ofType(SEARCHED_BEERS)
     .debounceTime(500)
+    .filter(action => action.payload !== '')
     .switchMap(({ payload }) =>
       ajax(payload)
         .map(receiveBeers)

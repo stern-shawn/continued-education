@@ -1,31 +1,23 @@
-import { CLEAR_STORIES, LOAD_STORIES } from '../actions';
+import { FETCH_STORIES, FETCH_STORIES_FULFILLED } from '../actions';
 
 const initialState = {
-  items: [],
+  stories: [],
+  loading: false,
 };
-
-const stories = [
-  {
-    title: "Headline 1",
-    body: "Lorem ipstuff",
-    id: 0,
-  },
-  {
-    title: "Ayyyy lmao",
-    body: "Generic af",
-    id: 1,
-  },
-];
 
 export default function storiesReducer(state = initialState, action) {
   switch(action.type) {
-    case LOAD_STORIES:
+    case FETCH_STORIES:
       return {
-        items: stories.slice(),
+        ...state,
+        stories: [],
+        loading: true,
       };
-    case CLEAR_STORIES:
+    case FETCH_STORIES_FULFILLED:
       return {
-        items: [],
+        ...state,
+        stories: action.payload,
+        loading: false,
       };
     default: return state;
   }

@@ -1,12 +1,10 @@
 import { Observable } from 'rxjs';
 import { combineEpics } from 'redux-observable';
-import { LOAD_STORIES } from '../actions';
+import { clear, LOAD_STORIES } from '../actions';
 
-function loadStoriesEpic(action$) {
-  return action$.ofType(LOAD_STORIES)
-    .do(action => console.log(action))
-    .ignoreElements();
-}
+const loadStoriesEpic = action$ => 
+  action$.ofType(LOAD_STORIES)
+    .switchMap(() => Observable.of(clear()).delay(2000));
 
 export const rootEpic = combineEpics(
   loadStoriesEpic,

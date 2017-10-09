@@ -8,10 +8,12 @@ const stories = [
   {
     title: "Headline 1",
     body: "Lorem ipstuff",
+    id: 0,
   },
   {
     title: "Ayyyy lmao",
     body: "Generic af",
+    id: 1,
   },
 ];
 

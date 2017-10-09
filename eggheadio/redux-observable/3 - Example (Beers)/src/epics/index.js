@@ -11,7 +11,7 @@ const search = (term) => `${beers}?beer_name=${encodeURIComponent(term)}`;
 
 export const searchBeersEpic = (action$, store, deps) =>
   action$.ofType(SEARCHED_BEERS)
-    .debounceTime(500)
+    .debounceTime(500, deps.scheduler) // scheduler is an optional param for debounceTime and will be ignored by production code :)
     .filter(action => action.payload !== '')
     .switchMap(({ payload }) => {
       // Set loading state in UI

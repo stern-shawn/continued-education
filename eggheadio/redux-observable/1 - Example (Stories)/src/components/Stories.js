@@ -27,8 +27,6 @@ const StoryList = ({ stories }) => {
   )
 };
 
-const Story = (props) => <p>{props.title}</p>
-
 const mapState = (state) => state;
 
 const mapDispatch = {

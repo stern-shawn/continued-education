@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Beers from './components/Beers';
 import Search from './components/Search';
-import { searchBeers } from './actions';
+import { searchBeers, cancelSearch } from './actions';
 
 class App extends Component {
   handleBeerSearch = (query) => {
@@ -18,6 +18,8 @@ class App extends Component {
           defaultValue={''}
           onChange={this.handleBeerSearch}
           messages={this.props.messages}
+          loading={this.props.loading}
+          cancel={this.props.cancelSearch}
         />
         <Beers beers={this.props.beers} loading={this.props.loading} />
       </div>
@@ -25,4 +27,4 @@ class App extends Component {
   }
 }
 
-export default connect((state) => state, { searchBeers })(App);
+export default connect((state) => state, { searchBeers, cancelSearch })(App);

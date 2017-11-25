@@ -19,6 +19,8 @@ const encodedAddress = encodeURIComponent(argv.address);
 axios
   .get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}`)
   .then(({ data }) => {
+    if (data.status === 'ZERO_RESULTS') return console.log('No results found for that address');
+  
     console.log(`Address: ${data.results[0].formatted_address}`);
     console.log(`Address: ${data.results[0].geometry.location.lat}`);
     console.log(`Address: ${data.results[0].geometry.location.lng}`);    

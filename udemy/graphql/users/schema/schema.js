@@ -48,7 +48,18 @@ const RootQuery = new GraphQLObjectType({
           .get(`http://localhost:3000/users/${args.id}`)
           .then(res => res.data);
       },
-    }
+    },
+    company: {
+      type: CompanyType,
+      args: { id: { type: GraphQLString } },
+      resolve(parentValue, args) {
+        // Axios by default returns data nested in a data key { data: { id:..., name:... }}
+        // so we need to pare it down first to just the result
+        return axios
+          .get(`http://localhost:3000/companies/${args.id}`)
+          .then(res => res.data);
+      },
+    },
   },
 });
 

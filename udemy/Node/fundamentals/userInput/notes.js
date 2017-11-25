@@ -28,11 +28,14 @@ const addNote = (title, body) => {
 }
 
 const getAll = () => {
-  console.log('Listing all notes');
+  return fetchNotes();
 }
 
+// Return the note with the matching title, or undefined if none match
 const getNote = (title) => {
-  console.log(`Displaying note with title: ${title}`);
+  const notes = fetchNotes();
+  const requestedNote = notes.filter((note) => note.title === title);
+  if (requestedNote.length === 1) return requestedNote[0];
 }
 
 // Remove a note with the given title and return if the operation resulted in a change to the notes
@@ -44,9 +47,16 @@ const removeNote = (title) => {
   return notes.length !== filteredNotes.length;
 }
 
+const logNote = (note) => {
+  console.log('--');
+  console.log(`Title: ${note.title}`);
+  console.log(`Body: ${note.body}`);
+}
+
 module.exports = {
   addNote,
   getAll,
   getNote,
+  logNote,
   removeNote,
 };

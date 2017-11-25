@@ -10,19 +10,24 @@ console.log(`Command: ${command}`);
 
 switch (command) {
   case 'add':
-    const result = notes.addNote(argv.title, argv.body);
-    if (result) {
+    const newNote = notes.addNote(argv.title, argv.body);
+    if (newNote) {
       console.log('Successfully added new note');
-      console.log('--');
-      console.log(`Title: ${result.title}`);
-      return console.log(`Body: ${result.body}`);
+      return notes.logNote(newNote);
     } else {
       return console.log(`A note with the title: ${argv.title} already exists, try again with a unique title`);
     }
   case 'list':
-    return notes.getAll();
+    const notesList = notes.getAll();
+    return notesList.forEach((note) => notes.logNote(note))
   case 'read':
-    return notes.getNote(argv.title);
+    const note = notes.getNote(argv.title);
+    if (note) {
+      console.log('Note found');
+      return notes.logNote(note);
+    } else {
+      return console.log('No note found with that title');
+    }
   case 'remove':
     const success = notes.removeNote(argv.title);
     const message = success ? `Note ${argv.title} removed` : `Note ${argv.title} not found`;

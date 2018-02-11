@@ -5,6 +5,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLList,
+  GraphQLNonNull,
   GraphQLSchema,
 } = graphql;
 
@@ -72,6 +73,38 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        // Enforce that firstName and age must be provided to addUser operation. Low-level validation, not the best yet...
+        firstName: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) },
+        companyId: { type: GraphQLString },
+      },
+      resolve(parentValue, { firstName, age, companyId }) { // destructure args.firstName, args.age
+        return axios
+          .post('http://localhost:3000/users', { firstName, age, companyId })
+          .then(res => res.data);
+      },
+    },
+  },
+  // Note: using this, we would provide something like this to GraphQL:
+  // mutation {
+  //   addUser(firstName: "Shawn", age: 26) {
+  //     id
+  //     firstName
+  //     age
+  //   }
+  // }
+  // notice how after the mutation we also need to query for results
+});
+
+
+
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation, // provided mutation: mutation property
 });

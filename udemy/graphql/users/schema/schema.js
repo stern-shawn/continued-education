@@ -89,17 +89,37 @@ const mutation = new GraphQLObjectType({
           .post('http://localhost:3000/users', { firstName, age, companyId })
           .then(res => res.data);
       },
+      // Note: using this, we would provide something like this to GraphQL:
+      // mutation {
+      //   addUser(firstName: "Shawn", age: 26) {
+      //     id
+      //     firstName
+      //     age
+      //   }
+      // }
+      // notice how after the mutation we also need to query for results
+
+    },
+    deleteUser: {
+      type: UserType,
+      args: {
+        // We should only need a user's id for deletion, nothing else
+        id: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parentValue, { id }) {
+        return axios
+          .delete(`http://localhost:3000/users/${id}`)
+          .then(res => res.data);
+          // This should return a value of null on success since JSON server doesn't return anything on DELETE
+      },
+      // Usage to remove user Shawn with id rJbIf8CUf
+      // mutation {
+      //   deleteUser(id: "rJbIf8CUf") {
+      //     id
+      //   }
+      // }
     },
   },
-  // Note: using this, we would provide something like this to GraphQL:
-  // mutation {
-  //   addUser(firstName: "Shawn", age: 26) {
-  //     id
-  //     firstName
-  //     age
-  //   }
-  // }
-  // notice how after the mutation we also need to query for results
 });
 
 

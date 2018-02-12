@@ -119,10 +119,34 @@ const mutation = new GraphQLObjectType({
       //   }
       // }
     },
+    editUser: {
+      type: UserType,
+      args: {
+        // Require ID, but all other args are optional
+        id: { type: new GraphQLNonNull(GraphQLString) },
+        firstName: { type: GraphQLString },
+        age: { type: GraphQLInt },
+        companyId: { type: GraphQLString },
+      },
+      resolve(parentValue, { id, ...args}) { // pluck out id and store the rest of the input in `args`
+        return axios
+          .patch(`http://localhost:3000/users/${id}`, { ...args }) // send PATCH using user id and spread `args`
+          .then(res => res.data);
+      },
+      // Note on verbs!
+      // - PUT will complete replace an object, and if some values are omitted, they'll be null'd on the overwritten field
+      // - PATCH will only update the provided fields and ignore those that aren't specified
+      // Mutation to convert user id 31 name from Alex to Timmay
+      // mutation {
+      //   editUser(id: "31", firstName: "Timmay") {
+      //     id
+      //     firstName
+      //     age
+      //   }
+      // }
+    }
   },
 });
-
-
 
 module.exports = new GraphQLSchema({
   query: RootQuery,

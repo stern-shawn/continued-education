@@ -18,8 +18,8 @@ class SongList extends PureComponent {
     return (
       <div>
         { songs &&
-          <ul>
-            { songs.map((song) => <li key={song.id}>{song.title}</li>) }
+          <ul className="collection">
+            { songs.map((song) => <li key={song.id} className="collection-item">{song.title}</li>) }
           </ul>
         }
       </div>

@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Root = () => {
-  return <div>Lyrical</div>
-};
+const Root = () => <div>Lyrical</div>;
 
 ReactDOM.render(
   <Root />,

@@ -1,16 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 // Framework agnostic apollo client
 import ApolloClient from 'apollo-client';
 // Binding layer between apollo client and react
 import { ApolloProvider } from 'react-apollo';
+
+import App from './components/App';
 import SongList from './components/SongList';
 
 const client = new ApolloClient({});
 
 const Root = () => (
   <ApolloProvider client={client}>
-    <SongList />
+    <Router history={hashHistory}>
+      <Route path="/" component={App}>
+        <IndexRoute component={SongList} />
+      </Route>
+    </Router>
   </ApolloProvider>
 );
 

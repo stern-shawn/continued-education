@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { Link } from 'react-router';
 
 class SongList extends PureComponent {
   render() {
@@ -22,6 +23,12 @@ class SongList extends PureComponent {
             { songs.map((song) => <li key={song.id} className="collection-item">{song.title}</li>) }
           </ul>
         }
+        <Link
+          to="/songs/new"
+          className="btn-floating btn-large red right"
+        >
+          <i className="material-icons">add</i>
+        </Link>
       </div>
     );
   }

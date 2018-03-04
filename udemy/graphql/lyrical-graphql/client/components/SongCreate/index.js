@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link, hashHistory } from 'react-router';
+import query from '../../queries/fetchSongs';
 
 class SongCreate extends Component {
   state = {
@@ -22,6 +23,8 @@ class SongCreate extends Component {
       variables: {
         title,
       },
+      // On completion, also execute this array of queries. Shortened from query: query to just query
+      refetchQueries: [{ query }]
     }).then(() => hashHistory.push('/'))
       // .catch(() => ) we could also add a catch for if the mutation failed
   }

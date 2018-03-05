@@ -7,10 +7,8 @@ import query from '../../queries/fetchSongs';
 
 class SongList extends PureComponent {
   onSongDelete = (id) => {
-    this.props.mutate({
-      variables: { id },
-      refetchQueries: [{ query }]
-    });
+    this.props.mutate({ variables: { id } })
+      .then(() => this.props.data.refetch());
   }
 
   render() {

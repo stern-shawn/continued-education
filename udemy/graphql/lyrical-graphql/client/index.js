@@ -12,7 +12,10 @@ import SongCreate from './components/SongCreate';
 import SongList from './components/SongList';
 import SongDetail from './components/SongDetail';
 
-const client = new ApolloClient({});
+const client = new ApolloClient({
+  // All elements from GraphQL are identified by its id value. As a result, every query must have an id and ids better be unique
+  dataIdFromObject: (o) => o.id,
+});
 
 const Root = () => (
   <ApolloProvider client={client}>

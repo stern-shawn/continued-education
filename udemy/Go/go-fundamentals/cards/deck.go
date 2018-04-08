@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 // Define a new type of 'deck' which is a slice of strings
@@ -76,4 +78,20 @@ func newDeckFromFile(filename string) deck {
 	// Convert the slice of strings to type `deck` :D
 
 	return deck(strings.Split(string(bs), ","))
+}
+
+// Randomize the order of cards in the targeted deck
+func (d deck) shuffle() {
+	// Create a new rand source using the current time, and use that to create a unique instance of rand
+	// Seeding the rand fn? Oh man it's like I'm back in college and working with Java...
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+
+	for i := range d {
+		// Generate a random int between 0 and the end of the array to place the current card, using our own seeded rand instance
+		newPosition := r.Intn(len(d) - 1)
+
+		// Easy python-like swap!
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }

@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func main() {
 	// Verbose declaration + assignment
 	// var card string = "Ace of Spades"
@@ -13,10 +11,7 @@ func main() {
 	cards := deck{"Two of Spades", newCard()}
 	cards = append(cards, "Six of Diamonds")
 
-	// Iterate over the index and values of cards
-	for i, card := range cards {
-		fmt.Println(i, card)
-	}
+	cards.print()
 }
 
 // Note that we need to explicitly declare the return data type to avoid compiler errors

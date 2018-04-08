@@ -8,8 +8,10 @@ func main() {
 	// card := "Ace of Spades"
 
 	// Create a new slice of strings
-	cards := deck{"Two of Spades", newCard()}
-	cards = append(cards, "Six of Diamonds")
+	// cards := deck{"Two of Spades", newCard()}
+	// cards = append(cards, "Six of Diamonds")
+
+	cards := newDeck()
 
 	cards.print()
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -56,4 +57,23 @@ func (d deck) saveToFile(filename string) error {
 	// WriteFile expects a byteslice, so convert the deck as a string to a slice of bytes. Use permissions 0666 for full r/w
 	// Return the possible error that may occur
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+}
+
+// Read a file from the hard drive, and return a new `deck`
+func newDeckFromFile(filename string) deck {
+	// Byte slice and the potential error object
+	bs, err := ioutil.ReadFile(filename)
+
+	// Only perform if there was an error
+	if err != nil {
+		// Log the error and exit the program
+		fmt.Println("Error: ", err)
+		os.Exit(1)
+	}
+
+	// Convert the byte slice into a string
+	// Split the string into a slice of strings on the comma delimiter
+	// Convert the slice of strings to type `deck` :D
+
+	return deck(strings.Split(string(bs), ","))
 }

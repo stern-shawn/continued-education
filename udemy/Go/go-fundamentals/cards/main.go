@@ -13,7 +13,10 @@ func main() {
 
 	cards := newDeck()
 
-	cards.print()
+	hand, remainingCards := deal(cards, 5)
+
+	hand.print()
+	remainingCards.print()
 }
 
 // Note that we need to explicitly declare the return data type to avoid compiler errors

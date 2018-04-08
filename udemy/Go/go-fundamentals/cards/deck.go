@@ -33,3 +33,10 @@ func (d deck) print() {
 		fmt.Println(i, card)
 	}
 }
+
+// Deal a hand of cards (returns a deck of size handSize, and the original deck after having that many cards dealt out)
+func deal(d deck, handSize int) (deck, deck) {
+	// Use slice syntax (oh hey, this looks like Python!) to make two slices, one from 0 to handSize (noninclusive)
+	// and from handSize to the end of the slice
+	return d[:handSize], d[handSize:]
+}

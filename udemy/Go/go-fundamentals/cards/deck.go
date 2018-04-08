@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 // Define a new type of 'deck' which is a slice of strings
@@ -39,4 +40,11 @@ func deal(d deck, handSize int) (deck, deck) {
 	// Use slice syntax (oh hey, this looks like Python!) to make two slices, one from 0 to handSize (noninclusive)
 	// and from handSize to the end of the slice
 	return d[:handSize], d[handSize:]
+}
+
+// Helper method for conversion from deck to string
+func (d deck) toString() string {
+	// Use the strings Join helper method to concat all values with separator ","
+	// use `[]string(d)` to convert d from type `deck` to a slice of strings again
+	return strings.Join([]string(d), ",")
 }

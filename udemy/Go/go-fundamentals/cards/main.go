@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 func main() {
 	// Verbose declaration + assignment
 	// var card string = "Ace of Spades"
@@ -13,10 +17,11 @@ func main() {
 
 	cards := newDeck()
 
-	hand, remainingCards := deal(cards, 5)
+	// hand, remainingCards := deal(cards, 5)
 
-	hand.print()
-	remainingCards.print()
+	// hand.print()
+	// remainingCards.print()
+	fmt.Println(cards.toString())
 }
 
 // Note that we need to explicitly declare the return data type to avoid compiler errors

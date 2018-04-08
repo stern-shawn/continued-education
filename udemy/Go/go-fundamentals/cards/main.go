@@ -10,7 +10,7 @@ func main() {
 	// card := "Ace of Spades"
 
 	// Create a new slice of strings
-	cards := []string{"Two of Spades", newCard()}
+	cards := deck{"Two of Spades", newCard()}
 	cards = append(cards, "Six of Diamonds")
 
 	// Iterate over the index and values of cards

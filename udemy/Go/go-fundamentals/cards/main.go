@@ -16,15 +16,11 @@ func main() {
 	// cards = append(cards, "Six of Diamonds")
 
 	cards := newDeck()
+	cards.saveToFile("myCards")
 
 	// hand, remainingCards := deal(cards, 5)
 
 	// hand.print()
 	// remainingCards.print()
 	fmt.Println(cards.toString())
-}
-
-// Note that we need to explicitly declare the return data type to avoid compiler errors
-func newCard() string {
-	return "Five of Hearts"
 }

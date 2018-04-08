@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"strings"
 )
 
@@ -46,5 +47,13 @@ func deal(d deck, handSize int) (deck, deck) {
 func (d deck) toString() string {
 	// Use the strings Join helper method to concat all values with separator ","
 	// use `[]string(d)` to convert d from type `deck` to a slice of strings again
-	return strings.Join([]string(d), ",")
+	// Actually, how about no, since `deck` is already a string slice... stupid Stephen
+	return strings.Join(d, ",")
+}
+
+// Save the targeted deck to the filesystem with the given filename
+func (d deck) saveToFile(filename string) error {
+	// WriteFile expects a byteslice, so convert the deck as a string to a slice of bytes. Use permissions 0666 for full r/w
+	// Return the possible error that may occur
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }

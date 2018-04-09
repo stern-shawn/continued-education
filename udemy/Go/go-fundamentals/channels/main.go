@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -25,7 +26,13 @@ func main() {
 	// Whenever the channel returns a value, spawn another routine to check the checked url again
 	// This syntax says 'whenever c returns a new value, assign it to `u` and execute the loop body
 	for u := range c {
-		go checkURL(u, c)
+		// For each follow up check, spawn as a function literal which is slept for 5 seconds before executing
+		// Pass the u by value to the Function Literal so that it has its own copy, instead of all child routines
+		// referencing the value of u at that point in time
+		go func(innerUrl string) {
+			time.Sleep(5 * time.Second)
+			checkURL(innerUrl, c)
+		}(u)
 	}
 }
 

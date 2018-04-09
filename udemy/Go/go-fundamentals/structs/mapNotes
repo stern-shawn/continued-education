@@ -1,0 +1,13 @@
+Map:
+- All keys must be of the same type, and all values must be of the same type
+- Used to represent a collection of closely related properties
+- Keys are indexed! (Iterable)
+- Keys can be added or removed, don't need to be known at compile time
+- Passed by reference (editing the map in a fn will cause changes to the underlying structure...)
+
+Struct:
+- No strict rules on keys/values
+- Used to represent something with many different, loosely related properties of different types
+- Keys are not indexed, no iterating
+- Keys MUST be defined at compile time, can't add keys that aren't in the struct definition at runtime
+- Passed by value (if we want to mutate original data in a fn, need to dereference the pointer)

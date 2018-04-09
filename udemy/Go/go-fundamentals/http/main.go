@@ -14,5 +14,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(resp)
+	// Make a huge slice that can receive the bytes once the brequest body is converted to byte slice by Reader
+	bs := make([]byte, 99999)
+
+	// Call the reader on our byte slice, the reader will operate directly on the value of the slice for us
+	resp.Body.Read(bs)
+
+	// Convert to a readable string and print
+	fmt.Println(string(bs))
 }

@@ -11,20 +11,24 @@ type contactInfo struct {
 
 // Declare a `person` struct, think plain object in JS or a dict in Python
 type person struct {
-	firstName string
-	lastName  string
-	contact   contactInfo
+	firstName   string
+	lastName    string
+	contactInfo // Equivalent to object property value shorthand from JavaScript ES6! contactInfo: contactInfo
 }
 
 func main() {
 	shawn := person{
 		firstName: "Shawn",
 		lastName:  "Stern",
-		contact: contactInfo{
+		contactInfo: contactInfo{
 			email:   "shawn@nicetryscrapers.com",
 			zipCode: 90210,
 		},
 	}
 
-	fmt.Printf("%+v", shawn)
+	shawn.print()
+}
+
+func (p person) print() {
+	fmt.Printf("%+v\n", p)
 }

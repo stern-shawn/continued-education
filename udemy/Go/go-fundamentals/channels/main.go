@@ -14,16 +14,24 @@ func main() {
 		"http://amazon.com",
 	}
 
+	c := make(chan string)
+
 	for _, url := range urls {
-		checkUrl(url)
+		go checkURL(url, c)
+	}
+
+	for i := 0; i < len(urls); i++ {
+		fmt.Println(<-c)
 	}
 }
 
-func checkUrl(url string) {
+func checkURL(url string, c chan string) {
 	_, err := http.Get(url)
 	if err != nil {
 		fmt.Println(url, "might be down!")
+		c <- "Maybe down"
 		return
 	}
 	fmt.Println(url, "is up!")
+	c <- "Yup it's up"
 }

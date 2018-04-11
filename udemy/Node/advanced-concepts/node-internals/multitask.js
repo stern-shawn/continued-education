@@ -1,4 +1,4 @@
-// process.env.UV_THREADPOOL_SIZE = 2;
+process.env.UV_THREADPOOL_SIZE = 5;
 
 const crypto = require('crypto');
 const https = require('https');
@@ -50,3 +50,4 @@ doHash();
 // This is why we always see one hash call finish before the fs does, and why the http request always finishes first
 // even though reading from the filesystem should be way faster
 // If we take out one hash call so that there are only 4 threadable tasks, we see that the read file call is the fastest
+// or, if we bump up to 5 threads, FS finishes first as it has a dedicated thread with no scheduler interference

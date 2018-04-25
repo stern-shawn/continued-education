@@ -24,8 +24,12 @@ mongoose.Query.prototype.exec = async function() {
 
   // If cached, return that value and skip query execution/transaction
   if (cacheValue) {
-    const document = new this.model(JSON.parse(cacheValue));
-    return document;
+    const document = JSON.parse(cacheValue);
+
+    // If we get back a collection of values instead of just one, correctly 'hydrate' that array into mongoose documents
+    return Array.isArray(document)
+      ? document.map(d => new this.model(d))
+      : new this.model(document);
   }
 
   // Otherwise, execute the query, cache in redis, and return to user

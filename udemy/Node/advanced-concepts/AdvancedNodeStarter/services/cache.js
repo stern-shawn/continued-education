@@ -44,7 +44,9 @@ mongoose.Query.prototype.exec = async function() {
 
   // Otherwise, execute the query, cache in redis, and return to user
   const result = await exec.apply(this, arguments);
-  client.set(cacheKey, JSON.stringify(result));
+
+  // Updating cache to expire values after 10s
+  client.set(cacheKey, JSON.stringify(result), 'EX', 10);
 
   return result;
 };

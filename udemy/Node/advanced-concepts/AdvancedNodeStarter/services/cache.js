@@ -4,14 +4,16 @@ const util = require('util');
 
 const redisUrl = 'redis://127.0.0.1:6379';
 const client = redis.createClient(redisUrl);
-// Promisify the client.get callback-based fn so it'll return a promise (can be async/awaited)
-client.get = util.promisify(client.get);
+// Promisify the client.hget callback-based fn so it'll return a promise (can be async/awaited)
+client.hget = util.promisify(client.hget);
 
 // Save a copy of the original query exec fn
 const exec = mongoose.Query.prototype.exec;
 
-mongoose.Query.prototype.cache = function() {
+mongoose.Query.prototype.cache = function(options = {}) {
   this.useCache = true;
+  this.hashKey = JSON.stringify(options.key || 'default');
+
   // Make sure to return this so the fn is chainable
   return this;
 }
@@ -30,7 +32,7 @@ mongoose.Query.prototype.exec = async function() {
   });
 
   // Check if value already cached in redis
-  const cacheValue = await client.get(cacheKey);
+  const cacheValue = await client.hget(this.hashKey, cacheKey);
 
   // If cached, return that value and skip query execution/transaction
   if (cacheValue) {
@@ -46,7 +48,7 @@ mongoose.Query.prototype.exec = async function() {
   const result = await exec.apply(this, arguments);
 
   // Updating cache to expire values after 10s
-  client.set(cacheKey, JSON.stringify(result), 'EX', 10);
+  client.hset(this.hashKey, cacheKey, JSON.stringify(result), 'EX', 10);
 
   return result;
 };

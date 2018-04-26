@@ -10,8 +10,18 @@ client.get = util.promisify(client.get);
 // Save a copy of the original query exec fn
 const exec = mongoose.Query.prototype.exec;
 
+mongoose.Query.prototype.cache = function() {
+  this.useCache = true;
+  // Make sure to return this so the fn is chainable
+  return this;
+}
+
 // Hijack the definition of mongoose exec, preform caching ops, and execute as normal if no cache found
 mongoose.Query.prototype.exec = async function() {
+  if (!this.useCache) {
+    return exec.apply(this, arguments);
+  }
+
   const cacheKey = JSON.stringify({
     // getQuery returns the query options, unique to each query!
     ...this.getQuery(),

@@ -39,6 +39,11 @@ class TestingPage {
     // We should wait for the app to finish rendering the logout button before testing for it. Otherwise code executes too fast
     await this.page.waitFor('a[href="/auth/logout"]');
   }
+
+  // Custom wrapper for common use of $eval to get innerHTML of the matching element
+  async getContentsOf(selector) {
+    return this.page.$eval(selector, (el) => el.innerHTML);
+  }
 };
 
 module.exports = TestingPage;

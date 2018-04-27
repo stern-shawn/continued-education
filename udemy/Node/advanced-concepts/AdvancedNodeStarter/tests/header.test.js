@@ -47,5 +47,8 @@ test('When signed in, logout button is displayed', async () => {
 
   const sig = keygrip.sign(`session=${sessionString}`);
 
-  console.log(sessionString, sig);
+  // Set cookies and reload page to fake logging in
+  await page.setCookie({ name: 'session', value: sessionString });
+  await page.setCookie({ name: 'session.sig', value: sig });
+  await page.reload();
 });

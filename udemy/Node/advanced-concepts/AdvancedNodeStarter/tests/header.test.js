@@ -1,5 +1,3 @@
-const sessionFactory = require('./factories/sessionFactory');
-const userFactory = require('./factories/userFactory');
 const Page = require('./helpers/page');
 
 // Declare shared vars here so that they can be initialized in beforeEach and accessible from test scopes
@@ -32,16 +30,8 @@ test('Clicking login initiates OAuth flow', async () => {
 });
 
 test('When signed in, logout button is displayed', async () => {
-  const user = await userFactory();
-  const { session, sig } = sessionFactory(user);
-
-  // Set cookies and reload page to fake logging in
-  await page.setCookie({ name: 'session', value: session });
-  await page.setCookie({ name: 'session.sig', value: sig });
-  await page.reload();
-  // We should wait for the app to finish rendering the logout button before testing for it. Otherwise code executes too fast
-  await page.waitFor('a[href="/auth/logout"]');
-
+  // Mock the process of logging in before rest of test
+  await page.login();
   const logoutText = await page.$eval('a[href="/auth/logout"]', el => el.innerHTML);
 
   expect(logoutText).toEqual('Logout');

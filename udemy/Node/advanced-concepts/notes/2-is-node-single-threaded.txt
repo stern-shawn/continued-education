@@ -1,3 +1,0 @@
-The Node Event Loop is single threaded
-
-Some of the Node Framework + Std Lib is NOT implmeneted as single threaded

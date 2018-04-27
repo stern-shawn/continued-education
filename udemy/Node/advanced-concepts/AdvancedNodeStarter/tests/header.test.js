@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer');
+const sessionFactory = require('./factories/sessionFactory');
+const userFactory = require('./factories/userFactory');
 
 // Declare shared vars here so that they can be initialized in beforeEach and accessible from test scopes
 let browser;
@@ -31,24 +33,11 @@ test('Clicking login initiates OAuth flow', async () => {
 });
 
 test('When signed in, logout button is displayed', async () => {
-  const id = '5ae0f41459620cf7e403a9af';
-  const sessionObject = {
-    passport: {
-      user: id,
-    },
-  };
-
-  const Buffer = require('safe-buffer').Buffer;
-  const sessionString = Buffer.from(JSON.stringify(sessionObject)).toString('base64');
-
-  const Keygrip = require('keygrip');
-  const keys = require('../config/keys');
-  const keygrip = new Keygrip([keys.cookieKey]);
-
-  const sig = keygrip.sign(`session=${sessionString}`);
+  const user = await userFactory();
+  const { session, sig } = sessionFactory(user);
 
   // Set cookies and reload page to fake logging in
-  await page.setCookie({ name: 'session', value: sessionString });
+  await page.setCookie({ name: 'session', value: session });
   await page.setCookie({ name: 'session.sig', value: sig });
   await page.reload();
   // We should wait for the app to finish rendering the logout button before testing for it. Otherwise code executes too fast

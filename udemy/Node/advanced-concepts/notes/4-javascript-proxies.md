@@ -28,3 +28,5 @@ console.log(allGreetings.english());
 ```
 
 Here we can see that when we try to access a property on the proxy, it attempts to get the property first from the target (`moreGreetings`), and falls back to the original `greetings` implementation if it returns `undefined`, ie. the method isn't implemented in our custom version.
+
+In the context of our testing, this means we can extend the puppeteer Page object in this manner to include our custom login + set cookie logic.

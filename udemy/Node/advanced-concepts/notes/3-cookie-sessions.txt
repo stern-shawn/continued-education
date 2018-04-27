@@ -1,0 +1,17 @@
+When we return from Google OAuth flow to /auth/google/callback?code=..., the headers in the response contain `session` and `session.sig`.
+
+If we decode the value of that cookie from its base64 form, we get back a session object that contains the id of our user from mongodb like so:
+
+> const session = 'eyJwYXNzcG9ydCI6eyJ1c2VyIjoiNWFlMGY0MTQ1OTYyMGNmN2U0MDNhOWFmIn19'
+> const Buffer = require('safe-buffer').Buffer
+> Buffer.from(session, 'base64').toString('utf-8')
+'{"passport":{"user":"5ae0f41459620cf7e403a9af"}}'
+
+This matches exactly with the user id in our mongodb mlab instance!
+
+This user object is then assigned by cookie-session library to the `req.session` object in express as a POJO.
+*It uses the session.sig value to verify the session hasn't been manipulated (somehow)?*
+
+Passport then looks at `req.session`, and tries to find `req.session.passport.user` value.
+If found, it executes `deserializeUser`, which (in this implementation) looks up that user in Mongodb, and if successful, returns them, and that value is assigned to `req.user`!
+

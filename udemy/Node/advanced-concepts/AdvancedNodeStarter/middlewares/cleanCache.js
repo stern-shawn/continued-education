@@ -1,6 +1,6 @@
 const { clearHash } = require('../services/cache');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   // Calling next executes the next middleware, ex the route handler, then after await, control comes back to this fn!
   await next();
 

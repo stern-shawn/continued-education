@@ -35,7 +35,10 @@ class TestingPage {
     // Set cookies and reload page to fake logging in
     await this.page.setCookie({ name: 'session', value: session });
     await this.page.setCookie({ name: 'session.sig', value: sig });
-    await this.page.reload();
+    // await this.page.reload();
+    // Instead of reload, navigate user to /blogs, as that is the default redirect after completing OAuth flow
+    await this.page.goto('localhost:3000/blogs');
+
     // We should wait for the app to finish rendering the logout button before testing for it. Otherwise code executes too fast
     await this.page.waitFor('a[href="/auth/logout"]');
   }

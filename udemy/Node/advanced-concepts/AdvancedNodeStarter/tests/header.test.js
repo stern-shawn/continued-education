@@ -51,4 +51,10 @@ test('When signed in, logout button is displayed', async () => {
   await page.setCookie({ name: 'session', value: sessionString });
   await page.setCookie({ name: 'session.sig', value: sig });
   await page.reload();
+  // We should wait for the app to finish rendering the logout button before testing for it. Otherwise code executes too fast
+  await page.waitFor('a[href="/auth/logout"]');
+
+  const logoutText = await page.$eval('a[href="/auth/logout"]', el => el.innerHTML);
+
+  expect(logoutText).toEqual('Logout');
 });

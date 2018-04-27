@@ -16,7 +16,7 @@ class TestingPage {
       get: function(target, property) {
         // Get really crazy, and use the proxy to give us access to methods on all three objects
         // We only ever use browser for launching a new page, so we don't really need a separate browser instance
-        return target[property] || page[property] || browser[property];
+        return target[property] || browser[property] || page[property];
       },
     });
   }

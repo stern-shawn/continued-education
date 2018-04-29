@@ -71,7 +71,7 @@ class TestingPage {
       method: 'POST',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify(_data),
     }).then(res => res.json()),
     path,
     data,

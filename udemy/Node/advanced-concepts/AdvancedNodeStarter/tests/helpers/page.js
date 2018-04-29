@@ -47,6 +47,35 @@ class TestingPage {
   async getContentsOf(selector) {
     return this.page.$eval(selector, (el) => el.innerHTML);
   }
+
+  // Helper GET method to reduce common GET request boilerplate in page tests
+  get(path) {
+    // If we just ran this as is, evaluate converts the contents to a string, and 'path' would be undefined!
+    // We have to pass arguments and then make the inner fn a function of the passed arguments
+    return this.page.evaluate(
+      (_path) => fetch(_path, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+      }).then(res => res.json()),
+      path,
+    );
+  }
+
+  // Helper POST method to reduce common POST request boilerplate in page tests
+  // Rewriting as an arrow fn class method
+  // page.evaluate takes in fn, ...args, so we can just pass as many supplemental args as needed and they'll be rest'ed
+  // into the passed fn block in order
+  post = (path, data) => this.page.evaluate(
+    (_path, _data) => fetch(_path, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }).then(res => res.json()),
+    path,
+    data,
+  );
 };
 
 module.exports = TestingPage;

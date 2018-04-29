@@ -1,5 +1,5 @@
 // Enable Jest to take up to 30s to complete a test in case this is running on a slow machine
-// jest.setTimeout(30000);
+jest.setTimeout(10000);
 
 const mongoose = require('mongoose');
 // Import the User model so mongoose in the test context is aware of that model!

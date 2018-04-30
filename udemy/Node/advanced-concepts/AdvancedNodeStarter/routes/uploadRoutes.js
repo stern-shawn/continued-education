@@ -27,7 +27,7 @@ module.exports = app => {
     // to temporarily store files in the express server memory or server local disk!
     const url = await getSignedUrlPromise('putObject', {
       Bucket: 'shawn-stern-advanced-node',
-      ContentType: 'jpeg',
+      ContentType: 'image/jpeg',
       Key: key,
     }).catch(err => console.error(err));
 

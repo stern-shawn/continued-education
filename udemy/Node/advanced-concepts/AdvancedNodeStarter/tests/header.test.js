@@ -7,7 +7,7 @@ beforeEach(async () => {
   // Launch Chromium, create a new tab, and navigate it to localhost:3000 where the app is located
   // (This is now all encapsulated in our neato TestingPage class as Page, with the static build method)
   page = await Page.build();
-  await page.goto('localhost:3000');
+  await page.goto('http://localhost:3000');
 });
 
 // Exit the current instance of Chromium after each test

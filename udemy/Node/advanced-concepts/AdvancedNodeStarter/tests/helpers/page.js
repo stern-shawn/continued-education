@@ -10,7 +10,10 @@ class TestingPage {
   // Declare as a static method, so we can call const ... = await TestingPage.build() without needing to make a new instance first
   static async build() {
     // Generate the browser and page from puppeteer
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox'],
+    });
     const page = await browser.newPage();
 
     // Construct the TestingPage instance with an internal reference to the puppeteer page implementation
@@ -37,7 +40,7 @@ class TestingPage {
     await this.page.setCookie({ name: 'session.sig', value: sig });
     // await this.page.reload();
     // Instead of reload, navigate user to /blogs, as that is the default redirect after completing OAuth flow
-    await this.page.goto('localhost:3000/blogs');
+    await this.page.goto('http://localhost:3000/blogs');
 
     // We should wait for the app to finish rendering the logout button before testing for it. Otherwise code executes too fast
     await this.page.waitFor('a[href="/auth/logout"]');

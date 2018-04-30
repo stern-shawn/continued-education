@@ -31,3 +31,5 @@ const s3 = new aws.S3({
   region: 'us-west-2',
 });
 ```
+
+Also note that once an image is added to the S3 bucket, by default, the bucket is set so that nobody can access the files directly using the provided links. You must update the S3 bucket policy so that users can perform the `getObject` action on that bucket's ARN (easy to set up using the policy generator, etc)

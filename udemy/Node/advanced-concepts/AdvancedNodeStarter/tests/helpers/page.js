@@ -63,19 +63,29 @@ class TestingPage {
   }
 
   // Helper POST method to reduce common POST request boilerplate in page tests
-  // Rewriting as an arrow fn class method
   // page.evaluate takes in fn, ...args, so we can just pass as many supplemental args as needed and they'll be rest'ed
   // into the passed fn block in order
-  post = (path, data) => this.page.evaluate(
-    (_path, _data) => fetch(_path, {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(_data),
-    }).then(res => res.json()),
-    path,
-    data,
-  );
+  post(path, data) {
+    return this.page.evaluate(
+      (_path, _data) => fetch(_path, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(_data),
+      }).then(res => res.json()),
+      path,
+      data,
+    );
+  }
+
+  // Helper method that converts an array of ajax/fetch actions to an array of promises, and returns a Promise of all
+  // to be awaited by the caller
+  execRequests(actions) {
+    return Promise.all(
+      // Use this[method] to programmatically perform this.get/this.post based on the action's method property
+      actions.map(({ method, path, data }) => this[method](path, data))
+    );
+  }
 };
 
 module.exports = TestingPage;

@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "8"
+dist: trusty
+services:
+  - mongodb
+  - redis-server
+env:
+  - NODE_ENV=ci PORT=3000
+cache:
+    directories:
+      - node_modules
+      - client/node_modules
+install:
+  - npm install
+  - npm run build
+script:
+    # Start npm run in a subshell (&), and don't kill it if the shell is closed (nohup)
+    - nohup npm run start &
+    # Give our server some time to start up
+    - sleep 3
+    # Test it!
+    - npm run test

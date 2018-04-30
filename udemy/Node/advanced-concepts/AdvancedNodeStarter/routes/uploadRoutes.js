@@ -7,6 +7,8 @@ const requireLogin = require('../middlewares/requireLogin');
 const s3 = new aws.S3({
   accessKeyId: keys.accessKeyId,
   secretAccessKey: keys.secretAccessKey,
+  signatureVersion: 'v4',
+  region: 'us-west-2',
 });
 
 // Promisify the getSignedUrl operation, since AWS doesn't have native Promise support for operations that don't return

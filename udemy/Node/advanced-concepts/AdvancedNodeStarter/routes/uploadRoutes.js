@@ -22,14 +22,18 @@ const getSignedUrlPromise = (operation, params) =>
 
 module.exports = app => {
   app.get('/api/upload', requireLogin, async (req, res) => {
+    const key = `${req.user.id}/${uuid()}.jpeg`;
     // Generate a signed url from aws s3 that our user can use to upload the file directly to s3 with, without us having
     // to temporarily store files in the express server memory or server local disk!
     const url = await getSignedUrlPromise('putObject', {
       Bucket: 'shawn-stern-advanced-node',
       ContentType: 'jpeg',
-      Key: `${req.user.id}/${uuid()}.jpeg`,
+      Key: key,
     }).catch(err => console.error(err));
 
-    res.send({ url });
+    res.send({
+      key,
+      url,
+    });
   });
 };

@@ -25,7 +25,11 @@ export const submitBlog = (values, file, history) => async dispatch => {
   });
 
   // Image upload was successful, create the post as usual
-  const res = await axios.post('/api/blogs', values);
+  // Use the image key that we generated when getting the presigned url
+  const res = await axios.post('/api/blogs', {
+    ...values,
+    imageUrl: uploadConfig.key,
+  });
 
   history.push('/blogs');
   dispatch({ type: FETCH_BLOG, payload: res.data });

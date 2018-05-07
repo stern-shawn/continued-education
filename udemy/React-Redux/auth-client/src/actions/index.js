@@ -5,6 +5,7 @@ import {
   AUTH_ERROR,
   UNAUTH_USER,
   FETCH_MESSAGE,
+  SAVE_COMMENT,
 } from './types';
 
 const API_URL = 'http://localhost:3000';
@@ -73,4 +74,11 @@ export function fetchMessage() {
       })
       .catch(err => console.dir(err));
   }
+}
+
+export function saveComment(comment) {
+  return {
+    type: SAVE_COMMENT,
+    payload: comment,
+  };
 }

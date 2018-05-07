@@ -5,6 +5,7 @@ import auth from './auth';
 const rootReducer = combineReducers({
   form,
   auth,
+  comments: (state = []) => state,
 });
 
 export default rootReducer;

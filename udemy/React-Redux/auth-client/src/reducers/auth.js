@@ -5,7 +5,7 @@ import {
   FETCH_MESSAGE,
 } from '../actions/types';
 
-export default function(state = {}, action) {
+export default function(state = { userProfile: {} }, action) {
   switch(action.type) {
     case AUTH_USER:
       console.log('User authenticated');

@@ -1,9 +1,12 @@
 import express from 'express';
 import graphqlHttp from 'express-graphql';
+import mongoose from 'mongoose';
 import schema from './schema';
 
 const app = express();
 const port = 3000;
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/gql_db');
 
 app.use('/graphql', graphqlHttp({
   graphiql: true,

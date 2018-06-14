@@ -1,23 +1,24 @@
 import express from 'express';
 import graphqlHttp from 'express-graphql';
+import schema from './schema';
 
 const app = express();
 const port = 3000;
 
-// Empty object, build later
-const schema = {};
-
 app.use('/graphql', graphqlHttp({
-    graphiql: true,
-    schema,
+  graphiql: true,
+  schema,
+  context: {
+    userId: 1,
+  },
 }));
 
 app.get('/', (req, res) => {
-    return res.json({
-        msg: 'hello graphql',
-    });
+  return res.json({
+    msg: 'hello graphql',
+  });
 });
 
 app.listen(port, () => {
-    console.log(`Server is running at port: ${port}`);
+  console.log(`Server is running at port: ${port}`);
 });

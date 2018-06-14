@@ -9,6 +9,7 @@ const typeDefs = `
   }
   type Query {
     allProducts: [Product]
+    getProduct(_id: ID): Product
   }
   input ProductInput {
     name: String!
@@ -16,6 +17,8 @@ const typeDefs = `
   }
   type Mutation {
     createProduct(input: ProductInput): Product
+    updateProduct(_id: ID!, input: ProductInput): Product
+    deleteProduct(_id: ID!): Product
   }
 `;
 

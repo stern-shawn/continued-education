@@ -16,5 +16,12 @@ export const resolvers = {
     allProducts() {
       return products;
     }
+  },
+  Mutation: {
+    // Destructure the arguments to just args.input from GraphQL
+    createProduct(_, { input }) {
+      products.push(input);
+      return input;
+    }
   }
 }

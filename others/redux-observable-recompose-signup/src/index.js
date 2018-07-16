@@ -6,12 +6,9 @@ import Routes from './Routes';
 import './global.scss';
 
 const App = () => (
-	<Provider store={ store }>
-		<Routes />
-	</Provider>
+  <Provider store={store}>
+    <Routes />
+  </Provider>
 );
 
-render(
-	<App />,
-	document.getElementById('root')
-);
+render(<App />, document.getElementById('root'));

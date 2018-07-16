@@ -4,9 +4,9 @@ import App from '/features/App';
 import Signup from '/features/Signup';
 
 export default () => (
-	<BrowserRouter>
-		<App>
-			<Route exact path="/" component={ Signup } />
-		</App>
-	</BrowserRouter>
+  <BrowserRouter>
+    <App>
+      <Route exact path="/" component={ Signup } />
+    </App>
+  </BrowserRouter>
 );

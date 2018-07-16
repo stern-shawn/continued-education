@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import logger from 'redux-logger';
+import promiseMiddleware from 'redux-promise-middleware';
 import rootReducer from '/ducks/root';
 import rootEpic from '/epics/root';
 
@@ -12,7 +13,7 @@ export default function configureStore() {
   const store = createStore(
     rootReducer,
     composeEnhancers(
-      applyMiddleware(epicMiddleware, logger)
+      applyMiddleware(promiseMiddleware({ promiseTypeDelimiter: '/' }), epicMiddleware, logger)
     )
   );
 

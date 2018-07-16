@@ -8,6 +8,10 @@ const signupDuck = autodux({
     loading: false,
     success: false,
     id: null,
+    name: {
+      first: 'Shawn',
+      last: 'Stern',
+    },
   },
   actions: {
     sendSignupInfo: (state, { username, password }) => ({
@@ -16,6 +20,19 @@ const signupDuck = autodux({
       password,
       loading: true,
     }),
+    sendPromise: {
+      create: ({ username, password }) => ({
+        data: { username, password },
+        async promise() {
+          const data = await fetch('https://jsonplaceholder.typicode.com/posts').then(res => res.json());
+          return data;
+        },
+      }),
+      reducer: (state) => ({
+        ...state,
+        loading: true,
+      }),
+    },
     signupSuccess: (state, id) => ({
       ...signupDuck.initial,
       success: true,

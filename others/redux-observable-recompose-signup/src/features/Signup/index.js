@@ -9,9 +9,14 @@ import './Signup.scss';
 
 const getTargetValue = path(['target', 'value']);
 
-const Signup = ({ handleSubmit, loading, updateUsername, updatePassword }) => (
+const Signup = ({ handleSubmit, id, loading, success, updateUsername, updatePassword }) => (
   <form onSubmit={handleSubmit}>
     <h3 className="title">Redux-Observable Form Magic</h3>
+    {success && (
+      <p className="has-text-success">
+        {`Success! Your id is ${id}`}
+      </p>
+    )}
     <input className="input" placeholder="Username" onChange={updateUsername} />
     <input className="input" type="password" placeholder="Password" onChange={updatePassword} />
     <button className={cn('button is-primary', { 'is-loading': loading })}>Sign Up</button>

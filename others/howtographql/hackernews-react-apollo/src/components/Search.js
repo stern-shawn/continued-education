@@ -29,7 +29,7 @@ const FEED_SEARCH_QUERY = gql`
 class Search extends Component {
   state = {
     links: [],
-    filter: ''
+    filter: '',
   }
 
   _executeSearch = async () => {
@@ -50,15 +50,16 @@ class Search extends Component {
   render() {
     return (
       <div>
-        <div>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            this._executeSearch()
+          }}
+        >
           Search
-          <input
-            type='text'
-            name="filter"
-            onChange={this.onChange}
-          />
-          <button onClick={() => this._executeSearch()}>OK</button>
-        </div>
+          <input type="text" name="filter" onChange={this.onChange} />
+          <button type="submit">OK</button>
+        </form>
         {this.state.links.map((link, index) => (
           <Link key={link.id} link={link} index={index} />
         ))}

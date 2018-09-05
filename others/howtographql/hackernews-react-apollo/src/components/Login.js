@@ -45,53 +45,53 @@ class Login extends Component {
     const { login, email, password, name } = this.state
 
     return (
-      <div>
-        <h4 className="mv3">{login ? 'Login' : 'Sign Up'}</h4>
-        <div className="flex flex-column">
-          {!login && (
-            <input
-              name="name"
-              value={name}
-              onChange={this.onChange}
-              type="text"
-              placeholder="Your name"
-            />
-          )}
-          <input
-            name="email"
-            value={email}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Your email address"
-          />
-          <input
-            name="password"
-            value={password}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Choose a safe password"
-          />
-        </div>
-        <div className="flex mt3">
-          <Mutation
-            mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
-            variables={{ email, password, name }}
-            onCompleted={data => this._confirm(data)}
-          >
-            {mutation => (
-              <div className="pointer mr2 button" onClick={mutation}>
+      <Mutation
+        mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
+        variables={{ email, password, name }}
+        onCompleted={data => this._confirm(data)}
+      >
+        {mutation => (
+          <form onSubmit={e => {
+            e.preventDefault();
+            mutation();
+          }}>
+            <h4 className="mv3">{login ? 'Login' : 'Sign Up'}</h4>
+            <div className="flex flex-column">
+              {!login && (
+                <input
+                  name="name"
+                  value={name}
+                  onChange={this.onChange}
+                  type="text"
+                  placeholder="Your name"
+                />
+              )}
+              <input
+                name="email"
+                value={email}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Your email address"
+              />
+              <input
+                name="password"
+                value={password}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Choose a safe password"
+              />
+            </div>
+            <div className="flex mt3">
+              <button className="pointer mr2 button" type="submit">
                 {login ? 'login' : 'create account'}
-              </div>
-            )}
-          </Mutation>
-          <div
-            className="pointer button"
-            onClick={this.toggleLogin}
-          >
-            {login ? 'need to create an account?' : 'already have an account?'}
-          </div>
-        </div>
-      </div>
+              </button>
+              <button className="pointer button" onClick={this.toggleLogin} type="button">
+                {login ? 'need to create an account?' : 'already have an account?'}
+              </button>
+            </div>
+          </form>
+        )}
+      </Mutation>
     )
   }
 }

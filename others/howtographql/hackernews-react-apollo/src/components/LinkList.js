@@ -26,6 +26,83 @@ export const FEED_QUERY = gql`
   }
 `
 
+const NEW_LINKS_SUBSCRIPTION = gql`
+  subscription {
+    newLink {
+      node {
+        id
+        url
+        description
+        createdAt
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
+      }
+    }
+  }
+`
+
+const NEW_VOTES_SUBSCRIPTION = gql`
+  subscription {
+    newVote {
+      node {
+        id
+        link {
+          id
+          url
+          description
+          createdAt
+          postedBy {
+            id
+            name
+          }
+          votes {
+            id
+            user {
+              id
+            }
+          }
+        }
+        user {
+          id
+        }
+      }
+    }
+  }
+`
+
+const _subscribeToNewLinks = subscribeToMore => {
+  subscribeToMore({
+    document: NEW_LINKS_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data) return prev
+      const newLink = subscriptionData.data.newLink.node
+
+      return {
+        ...prev,
+        feed: {
+          links: [newLink, ...prev.feed.links],
+          count: prev.feed.links.length + 1,
+          __typename: prev.feed.__typename
+        },
+      };
+    }
+  })
+}
+
+const _subscribeToNewVotes = subscribeToMore => {
+  subscribeToMore({
+    document: NEW_VOTES_SUBSCRIPTION
+  })
+}
+
 const _updateCacheAfterVote = (store, createVote, linkId) => {
   const data = store.readQuery({ query: FEED_QUERY })
 
@@ -37,9 +114,12 @@ const _updateCacheAfterVote = (store, createVote, linkId) => {
 
 const LinkList = () => (
   <Query query={FEED_QUERY}>
-    {({ loading, error, data }) => {
+    {({ loading, error, data, subscribeToMore }) => {
       if (loading) return <div>Fetching</div>
       if (error) return <div>Error</div>
+
+      _subscribeToNewLinks(subscribeToMore)
+      _subscribeToNewVotes(subscribeToMore)
 
       const linksToRender = data.feed.links
 

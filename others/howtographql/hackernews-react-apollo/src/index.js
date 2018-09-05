@@ -30,7 +30,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-ReactDOM.render(
+const render = () => ReactDOM.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
       <App />
@@ -38,4 +38,12 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root')
 )
+
+if (module.hot) {
+  module.hot.accept('./components/App', () => {
+    render()
+  })
+}
+
+render()
 registerServiceWorker()

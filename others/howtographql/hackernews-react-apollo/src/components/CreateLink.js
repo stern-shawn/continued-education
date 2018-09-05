@@ -20,7 +20,7 @@ class CreateLink extends Component {
     url: '',
   }
 
-  changeValue = e => this.setState({ [e.target.name]: e.target.value })
+  onChange = e => this.setState({ [e.target.name]: e.target.value })
 
   navigateOnComplete = () => this.props.history.push('/')
 
@@ -34,7 +34,7 @@ class CreateLink extends Component {
             className="mb2"
             name="description"
             value={description}
-            onChange={this.changeValue}
+            onChange={this.onChange}
             type="text"
             placeholder="A description for the link"
           />
@@ -42,7 +42,7 @@ class CreateLink extends Component {
             className="mb2"
             name="url"
             value={url}
-            onChange={this.changeValue}
+            onChange={this.onChange}
             type="text"
             placeholder="The URL for the link"
           />

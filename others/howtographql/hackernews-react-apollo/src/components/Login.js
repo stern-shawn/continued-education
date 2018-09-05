@@ -37,6 +37,10 @@ class Login extends Component {
     localStorage.setItem(AUTH_TOKEN, token)
   }
 
+  onChange = e => this.setState({ [e.target.name]: e.target.value })
+
+  toggleLogin = () => this.setState(prevState => ({ login: !prevState.login }))
+
   render() {
     const { login, email, password, name } = this.state
 
@@ -46,21 +50,24 @@ class Login extends Component {
         <div className="flex flex-column">
           {!login && (
             <input
+              name="name"
               value={name}
-              onChange={e => this.setState({ name: e.target.value })}
+              onChange={this.onChange}
               type="text"
               placeholder="Your name"
             />
           )}
           <input
+            name="email"
             value={email}
-            onChange={e => this.setState({ email: e.target.value })}
+            onChange={this.onChange}
             type="text"
             placeholder="Your email address"
           />
           <input
+            name="password"
             value={password}
-            onChange={e => this.setState({ password: e.target.value })}
+            onChange={this.onChange}
             type="password"
             placeholder="Choose a safe password"
           />
@@ -79,7 +86,7 @@ class Login extends Component {
           </Mutation>
           <div
             className="pointer button"
-            onClick={() => this.setState({ login: !login })}
+            onClick={this.toggleLogin}
           >
             {login ? 'need to create an account?' : 'already have an account?'}
           </div>

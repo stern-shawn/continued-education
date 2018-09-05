@@ -45,6 +45,8 @@ class Search extends Component {
     this.setState({ links })
   }
 
+  onChange = e => this.setState({ [e.target.name]: e.target.value })
+
   render() {
     return (
       <div>
@@ -52,7 +54,8 @@ class Search extends Component {
           Search
           <input
             type='text'
-            onChange={e => this.setState({ filter: e.target.value })}
+            name="filter"
+            onChange={this.onChange}
           />
           <button onClick={() => this._executeSearch()}>OK</button>
         </div>

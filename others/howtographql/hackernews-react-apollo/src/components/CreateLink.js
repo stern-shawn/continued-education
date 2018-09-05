@@ -20,9 +20,7 @@ class CreateLink extends Component {
     url: '',
   }
 
-  changeDescription = e => this.setState({ description: e.target.value })
-
-  changeUrl = e => this.setState({ url: e.target.value })
+  changeValue = e => this.setState({ [e.target.name]: e.target.value })
 
   navigateOnComplete = () => this.props.history.push('/')
 
@@ -34,15 +32,17 @@ class CreateLink extends Component {
         <div className="flex flex-column mt3">
           <input
             className="mb2"
+            name="description"
             value={description}
-            onChange={this.changeDescription}
+            onChange={this.changeValue}
             type="text"
             placeholder="A description for the link"
           />
           <input
             className="mb2"
+            name="url"
             value={url}
-            onChange={this.changeUrl}
+            onChange={this.changeValue}
             type="text"
             placeholder="The URL for the link"
           />

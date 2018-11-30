@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
 import { graphqlMutation } from 'aws-appsync-react';
+import { buildSubscription } from 'aws-appsync';
 import gql from 'graphql-tag';
 import logo from './logo.svg';
 import './App.css';
@@ -27,8 +28,22 @@ const CREATE_TODO = gql`
   }
 `;
 
+const SUBSCRIBE_TODOS = gql`
+  subscription {
+    onCreateTodo {
+      id
+      title
+      completed
+    }
+  }
+`;
+
 class App extends Component {
   state = { todo: '' };
+
+  componentDidMount = () => {
+    this.props.subscribeToMore(buildSubscription(SUBSCRIBE_TODOS, LIST_TODOS));
+  };
 
   addTodo = () => {
     if (this.state.todo === '') return;
@@ -78,6 +93,7 @@ export default compose(
       fetchPolicy: 'cache-and-network',
     },
     props: props => ({
+      subscribeToMore: props.data.subscribeToMore,
       todos: props.data.listTodos ? props.data.listTodos.items : [],
     }),
   }),

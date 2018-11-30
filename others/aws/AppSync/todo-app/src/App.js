@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { compose, graphql } from 'react-apollo';
 import { graphqlMutation } from 'aws-appsync-react';
 import { buildSubscription } from 'aws-appsync';
@@ -38,53 +38,56 @@ const SUBSCRIBE_TODOS = gql`
   }
 `;
 
-class App extends Component {
-  state = { todo: '' };
+const App = ({ createTodo, subscribeToMore, todos }) => {
+  const [todoInput, setTodoInput] = useState('');
 
-  componentDidMount = () => {
-    this.props.subscribeToMore(buildSubscription(SUBSCRIBE_TODOS, LIST_TODOS));
-  };
-
-  addTodo = () => {
-    if (this.state.todo === '') return;
-    const todo = {
-      title: this.state.todo,
-      completed: false,
-    };
-    this.props.createTodo(todo);
-    this.setState({ todo: '' });
-  };
-
-  render() {
-    const { todos } = this.props;
-
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-        </header>
-        <input
-          onChange={e => this.setState({ todo: e.target.value })}
-          value={this.state.todo}
-          placeholder="Todo Name"
-        />
-        <button onClick={this.addTodo}>Add Todo</button>
-        {todos.length > 0 && (
-          <ul style={{ listStyleType: 'none' }}>
-            {todos.map(item => (
-              <li key={item.id} style={{ marginBottom: '.25rem' }}>
-                {item.title}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+  // Subscribe to graphQL subscriptions from AWS AppSync for live updates to todos across clients
+  useEffect(() => {
+    const unsubscribe = subscribeToMore(
+      buildSubscription(SUBSCRIBE_TODOS, LIST_TODOS),
     );
-  }
-}
+    // subscribeToMore returns an unsub method, for clean up of the subscription on unmount
+    return () => unsubscribe();
+  }, []); // We don't want to sub/unsub on every rerender, pass an empty array of props to make this run only once on first mount/unmount
+
+  const addTodo = e => {
+    e.preventDefault();
+    if (todoInput === '') return;
+    createTodo({
+      title: todoInput,
+      completed: false,
+    });
+    setTodoInput('');
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+      </header>
+      <form onSubmit={addTodo}>
+        <input
+          onChange={e => setTodoInput(e.target.value)}
+          value={todoInput}
+          placeholder="New Todo"
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+      {todos.length > 0 && (
+        <ul style={{ listStyleType: 'none' }}>
+          {todos.map(item => (
+            <li key={item.id} style={{ marginBottom: '.25rem' }}>
+              {item.title}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 
 export default compose(
   graphqlMutation(CREATE_TODO, LIST_TODOS, 'Todo'),
@@ -92,9 +95,9 @@ export default compose(
     options: {
       fetchPolicy: 'cache-and-network',
     },
-    props: props => ({
-      subscribeToMore: props.data.subscribeToMore,
-      todos: props.data.listTodos ? props.data.listTodos.items : [],
+    props: ({ data }) => ({
+      subscribeToMore: data.subscribeToMore,
+      todos: data.listTodos ? data.listTodos.items : [],
     }),
   }),
 )(App);

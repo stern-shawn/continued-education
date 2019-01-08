@@ -1,0 +1,35 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "photoalbums-20190106170346-authRole",
+            "UnauthRoleArn": "arn:aws:iam::698454932933:role/photoalbums-20190106170346-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::698454932933:role/photoalbums-20190106170346-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "photoalbums-20190106170346-deployment",
+            "UnauthRoleName": "photoalbums-20190106170346-unauthRole",
+            "StackName": "photoalbums-20190106170346",
+            "StackId": "arn:aws:cloudformation:us-west-2:698454932933:stack/photoalbums-20190106170346/168d8800-1218-11e9-afed-065f9ec2d268"
+        }
+    },
+    "auth": {
+        "cognito11ad9152": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/photoalbums-20190106170346-deployment/amplify-cfn-templates/auth/cognito11ad9152-cloudformation-template.yml",
+                "logicalId": "authcognito11ad9152"
+            },
+            "lastPushTimeStamp": "2019-01-07T01:08:16.021Z",
+            "output": {
+                "AppClientSecret": "1av4q8lsskhki1fvd5pksrflh5tiajrfimbt96uj8raafnrdlu07",
+                "UserPoolId": "us-west-2_jMT1jO1rr",
+                "AppClientIDWeb": "7fgbaktd4akvq897hcvdstsko9",
+                "AppClientID": "1f613m7ef8p7ijp66p411c8lbn",
+                "IdentityPoolId": "us-west-2:a30d0f66-56e8-44b9-be6f-33da59303431",
+                "IdentityPoolName": "cognito11ad9152_identitypool_11ad9152",
+                "UserPoolName": "cognito11ad9152_userpool_11ad9152"
+            },
+            "lastPushDirHash": "jauJA/+Yn1OCoL3wj7puxy8n6n4="
+        }
+    }
+}

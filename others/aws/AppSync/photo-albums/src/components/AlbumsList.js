@@ -7,7 +7,7 @@ const AlbumsList = ({ albums }) => (
     <Header as="h3">My Albums</Header>
     <List divided relaxed>
       {albums.sort(makeComparator('name')).map(album => (
-        <li key={album.id}>{album.name}</li>
+        <List.Item key={album.id}>{album.name}</List.Item>
       ))}
     </List>
   </Segment>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Connect } from 'aws-amplify-react'
 import { graphqlOperation } from 'aws-amplify'
 import AlbumsList from './AlbumsList'
@@ -21,18 +21,16 @@ const SubscribeToNewAlbums = `
   }
 `
 
-class AlbumsListLoader extends React.Component {
-  onNewAlbum = (prevQuery, newData) => {
-    // When we get data about a new album, we need to put in into an object with the same shape as the original query
-    // results, but with the new data merged in
-    const updatedQuery = {
-      ...prevQuery,
-      listAlbums: {
-        items: [...prevQuery.listAlbums.items, newData.onCreateAlbum],
-      },
-    }
-    return updatedQuery
-  }
+class AlbumsListLoader extends Component {
+  // When we get data about a new album, we need to put in into an object with the same shape as the original query
+  // results, but with the new data merged in
+  onNewAlbum = (prevQuery, newData) => ({
+    ...prevQuery,
+    listAlbums: {
+      ...prevQuery.listAlbums,
+      items: [...prevQuery.listAlbums.items, newData.onCreateAlbum],
+    },
+  })
 
   render() {
     return (

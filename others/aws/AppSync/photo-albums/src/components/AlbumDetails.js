@@ -1,7 +1,8 @@
 import React from 'react'
 import { Connect } from 'aws-amplify-react'
 import { graphqlOperation } from 'aws-amplify'
-import { Segment, Header } from 'semantic-ui-react'
+import { Header, Segment } from 'semantic-ui-react'
+import S3ImageUpload from './S3ImageUpload';
 
 const GetAlbum = `query GetAlbum($id: ID!) {
   getAlbum(id: $id) {
@@ -13,7 +14,7 @@ const GetAlbum = `query GetAlbum($id: ID!) {
 const AlbumDetails = ({ album }) => (
   <Segment>
     <Header as="h3">{album.name}</Header>
-    <p>TODO: Allow photo uploads</p>
+    <S3ImageUpload albumId={album.id}/>
     <p>TODO: Show photos for this album</p>
   </Segment>
 )

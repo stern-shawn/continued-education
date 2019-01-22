@@ -1,0 +1,9 @@
+{
+    "bucketName": "photoalbumsce5e0871862f48e0a8adf7fb7ab835fc",
+    "authPolicyName": "s3_amplify_713b286b",
+    "unauthPolicyName": "s3_amplify_713b286b",
+    "authRoleName": "photoalbums-20190106170346-authRole",
+    "unauthRoleName": "photoalbums-20190106170346-unauthRole",
+    "authPermissions": "rw",
+    "unauthPermissions": ""
+}

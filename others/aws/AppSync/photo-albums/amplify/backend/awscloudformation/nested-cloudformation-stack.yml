@@ -146,6 +146,21 @@
 					"DeploymentTimestamp": "1548051149295"
 				}
 			}
+		},
+		"storagephotoalbumstorage": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/photoalbums-20190106170346-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"Parameters": {
+					"bucketName": "photoalbumsce5e0871862f48e0a8adf7fb7ab835fc",
+					"authPolicyName": "s3_amplify_713b286b",
+					"unauthPolicyName": "s3_amplify_713b286b",
+					"authRoleName": "photoalbums-20190106170346-authRole",
+					"unauthRoleName": "photoalbums-20190106170346-unauthRole",
+					"authPermissions": "rw",
+					"unauthPermissions": ""
+				}
+			}
 		}
 	},
 	"Outputs": {

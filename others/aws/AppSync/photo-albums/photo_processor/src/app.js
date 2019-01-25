@@ -61,6 +61,7 @@ const resize = async (bucketName, key) => {
   }
 }
 
+// todo: could be fewer lines
 const storePhotoInfo = item => {
   const params = {
     Item: item,
@@ -69,6 +70,7 @@ const storePhotoInfo = item => {
   return DynamoDBDocClient.put(params).promise()
 }
 
+// todo: could be fewer lines
 const getMetadata = async (bucketName, key) => {
   const headResult = await S3.headObject({ Bucket: bucketName, Key: key }).promise()
   return headResult.Metadata

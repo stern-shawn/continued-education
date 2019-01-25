@@ -4,6 +4,7 @@ import { graphqlOperation } from 'aws-amplify'
 import { Divider, Header, Segment } from 'semantic-ui-react'
 import S3ImageUpload from './S3ImageUpload'
 
+// todo: add fullsize to query and support fullsize detail modal/route?
 const GetAlbum = `query GetAlbum($id: ID!) {
   getAlbum(id: $id) {
     id

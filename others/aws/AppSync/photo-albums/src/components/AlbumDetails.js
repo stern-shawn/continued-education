@@ -1,21 +1,42 @@
 import React from 'react'
-import { Connect } from 'aws-amplify-react'
+import { Connect, S3Image } from 'aws-amplify-react'
 import { graphqlOperation } from 'aws-amplify'
-import { Header, Segment } from 'semantic-ui-react'
-import S3ImageUpload from './S3ImageUpload';
+import { Divider, Header, Segment } from 'semantic-ui-react'
+import S3ImageUpload from './S3ImageUpload'
 
 const GetAlbum = `query GetAlbum($id: ID!) {
   getAlbum(id: $id) {
     id
     name
+    photos {
+      items {
+        thumbnail {
+          key
+        }
+      }
+      nextToken
+    }
   }
 }`
+
+const PhotosList = ({ photos }) => (
+  <>
+    <Divider hidden />
+    {photos.map(photo => (
+      <S3Image
+        key={photo.thumbnail.key}
+        imgKey={photo.thumbnail.key.replace('public/', '')}
+        style={{ display: 'inline-block', paddingRight: '5px' }}
+      />
+    ))}
+  </>
+)
 
 const AlbumDetails = ({ album }) => (
   <Segment>
     <Header as="h3">{album.name}</Header>
-    <S3ImageUpload albumId={album.id}/>
-    <p>TODO: Show photos for this album</p>
+    <S3ImageUpload albumId={album.id} />
+    <PhotosList photos={album.photos.items} />
   </Segment>
 )
 

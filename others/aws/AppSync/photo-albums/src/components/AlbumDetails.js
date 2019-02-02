@@ -1,7 +1,8 @@
 import React from 'react'
 import { S3Image } from 'aws-amplify-react'
 import { API, graphqlOperation } from 'aws-amplify'
-import { Divider, Form, Header, Segment } from 'semantic-ui-react'
+import { Divider, Form, Header, Icon, List, Segment } from 'semantic-ui-react'
+import AddUsernameToAlbum from './AddUsernameToAlbum'
 import S3ImageUpload from './S3ImageUpload'
 
 // todo: add fullsize to query and support fullsize detail modal/route?
@@ -9,6 +10,7 @@ const GetAlbum = `query GetAlbum($id: ID!, $nextTokenForPhotos: String) {
   getAlbum(id: $id) {
     id
     name
+    members
     photos(sortDirection: DESC, nextToken: $nextTokenForPhotos) {
       nextToken
       items {
@@ -21,6 +23,16 @@ const GetAlbum = `query GetAlbum($id: ID!, $nextTokenForPhotos: String) {
     }
   }
 }`
+
+const MembersList = ({ members }) => (
+  <>
+    <Header as="h4">
+      <Icon name="user circle" />
+      <Header.Content>Members</Header.Content>
+    </Header>
+    <List bulleted>{members && members.map(member => <List.Item key={member}>{member}</List.Item>)}</List>
+  </>
+)
 
 const PhotosList = ({ photos }) => (
   <>
@@ -41,6 +53,14 @@ const AlbumDetails = ({ album, hasMorePhotos, loadMorePhotos, loadingPhotos }) =
   ) : (
     <Segment>
       <Header as="h3">{album.name}</Header>
+      <Segment.Group>
+        <Segment>
+          <MembersList members={album.members} />
+        </Segment>
+        <Segment basic>
+          <AddUsernameToAlbum albumId={album.id} />
+        </Segment>
+      </Segment.Group>
       <S3ImageUpload albumId={album.id} />
       <PhotosList photos={album.photos.items} />
       {hasMorePhotos && (

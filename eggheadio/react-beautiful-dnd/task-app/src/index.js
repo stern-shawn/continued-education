@@ -13,9 +13,16 @@ const Container = styled.div`
 `
 
 const App = () => {
-  const [state, setState] = useState(initialData)
+  const [taskState, setTaskState] = useState(initialData)
+  const [homeIndex, setHomeIndex] = useState(0)
+
+  const onDragStart = ({ source }) => {
+    const index = taskState.columnOrder.indexOf(source.droppableId)
+    setHomeIndex(index)
+  }
 
   const onDragEnd = ({ destination, source, draggableId }) => {
+    setHomeIndex(0)
     console.log('source 🛫: ', source)
     console.log('destination 🛬: ', destination)
     console.log('draggableId: ', draggableId)
@@ -25,8 +32,8 @@ const App = () => {
     // Also check if the location didn't change at all
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
 
-    const start = state.columns[source.droppableId]
-    const finish = state.columns[destination.droppableId]
+    const start = taskState.columns[source.droppableId]
+    const finish = taskState.columns[destination.droppableId]
 
     // Updating the same column
     if (start === finish) {
@@ -34,7 +41,7 @@ const App = () => {
       newTaskIds.splice(source.index, 1) // remove the task id from its previous index
       newTaskIds.splice(destination.index, 0, draggableId) // insert the task id at its new index
 
-      setState(s => ({
+      setTaskState(s => ({
         ...s,
         columns: {
           ...s.columns,
@@ -54,7 +61,7 @@ const App = () => {
     const newFinishTaskIds = [...finish.taskIds]
     newFinishTaskIds.splice(destination.index, 0, draggableId)
 
-    setState(s => ({
+    setTaskState(s => ({
       ...s,
       columns: {
         ...s.columns,
@@ -71,13 +78,15 @@ const App = () => {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <Container>
-        {state.columnOrder.map(columnId => {
-          const column = state.columns[columnId]
-          const tasks = column.taskIds.map(taskId => state.tasks[taskId])
+        {taskState.columnOrder.map((columnId, index) => {
+          const column = taskState.columns[columnId]
+          const tasks = column.taskIds.map(taskId => taskState.tasks[taskId])
 
-          return <Column key={column.id} column={column} tasks={tasks} />
+          const isDropDisabled = index < homeIndex
+
+          return <Column key={column.id} column={column} tasks={tasks} isDropDisabled={isDropDisabled} />
         })}
       </Container>
     </DragDropContext>

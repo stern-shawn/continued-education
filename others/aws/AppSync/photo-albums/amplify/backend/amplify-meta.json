@@ -1,72 +1,73 @@
 {
-	"providers": {
-		"awscloudformation": {
-			"AuthRoleName": "photoalbums-20190106170346-authRole",
-			"UnauthRoleArn": "arn:aws:iam::698454932933:role/photoalbums-20190106170346-unauthRole",
-			"AuthRoleArn": "arn:aws:iam::698454932933:role/photoalbums-20190106170346-authRole",
-			"Region": "us-west-2",
-			"DeploymentBucketName": "photoalbums-20190106170346-deployment",
-			"UnauthRoleName": "photoalbums-20190106170346-unauthRole",
-			"StackName": "photoalbums-20190106170346",
-			"StackId": "arn:aws:cloudformation:us-west-2:698454932933:stack/photoalbums-20190106170346/168d8800-1218-11e9-afed-065f9ec2d268"
-		}
-	},
-	"auth": {
-		"cognito11ad9152": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/photoalbums-20190106170346-deployment/amplify-cfn-templates/auth/cognito11ad9152-cloudformation-template.yml",
-				"logicalId": "authcognito11ad9152"
-			},
-			"lastPushTimeStamp": "2019-01-22T06:06:26.465Z",
-			"output": {
-				"AppClientSecret": "1av4q8lsskhki1fvd5pksrflh5tiajrfimbt96uj8raafnrdlu07",
-				"UserPoolId": "us-west-2_jMT1jO1rr",
-				"AppClientIDWeb": "7fgbaktd4akvq897hcvdstsko9",
-				"AppClientID": "1f613m7ef8p7ijp66p411c8lbn",
-				"IdentityPoolId": "us-west-2:a30d0f66-56e8-44b9-be6f-33da59303431",
-				"IdentityPoolName": "cognito11ad9152_identitypool_11ad9152",
-				"UserPoolName": "cognito11ad9152_userpool_11ad9152"
-			},
-			"lastPushDirHash": "jauJA/+Yn1OCoL3wj7puxy8n6n4="
-		}
-	},
-	"api": {
-		"photoalbums": {
-			"service": "AppSync",
-			"providerPlugin": "awscloudformation",
-			"output": {
-				"securityType": "AMAZON_COGNITO_USER_POOLS",
-				"GraphQLAPIIdOutput": "qpfp5oahhrd6bdurtpr2lt2cd4",
-				"GraphQLAPIEndpointOutput": "https://tfmto7zakveetkmdmznxsisb2m.appsync-api.us-west-2.amazonaws.com/graphql",
-				"GraphQLAPIKeyOutput": "da2-7b7zfefwvffivlvimwj5hwfeoi",
-				"AuthCognitoUserPoolIdOutput": "us-west-2_jMT1jO1rr",
-				"AuthCognitoUserPoolNativeClientId": "See UserPool: us-west-2_jMT1jO1rr",
-				"AuthCognitoUserPoolJSClientId": "See UserPool: us-west-2_jMT1jO1rr"
-			},
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/photoalbums-20190106170346-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-				"logicalId": "apiphotoalbums"
-			},
-			"lastPushTimeStamp": "2019-01-22T06:06:26.466Z",
-			"lastPushDirHash": "uhK2fTcGMJ7YrOYbpa8vhgkjcNk="
-		}
-	},
-	"storage": {
-		"photoalbumstorage": {
-			"service": "S3",
-			"providerPlugin": "awscloudformation",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/photoalbums-20190106170346-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
-				"logicalId": "storagephotoalbumstorage"
-			},
-			"lastPushTimeStamp": "2019-01-22T06:06:26.467Z",
-			"output": {
-				"BucketName": "photoalbumsce5e0871862f48e0a8adf7fb7ab835fc",
-				"Region": "us-west-2"
-			},
-			"lastPushDirHash": "biqf3MB29PD+rRxSvvV8TvxawIg="
-		}
-	}
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "photoalbums-20190106170346-authRole",
+            "UnauthRoleArn": "arn:aws:iam::698454932933:role/photoalbums-20190106170346-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::698454932933:role/photoalbums-20190106170346-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "photoalbums-20190106170346-deployment",
+            "UnauthRoleName": "photoalbums-20190106170346-unauthRole",
+            "StackName": "photoalbums-20190106170346",
+            "StackId": "arn:aws:cloudformation:us-west-2:698454932933:stack/photoalbums-20190106170346/168d8800-1218-11e9-afed-065f9ec2d268"
+        }
+    },
+    "auth": {
+        "cognito11ad9152": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/photoalbums-20190106170346-deployment/amplify-cfn-templates/auth/cognito11ad9152-cloudformation-template.yml",
+                "logicalId": "authcognito11ad9152"
+            },
+            "lastPushTimeStamp": "2019-02-02T22:23:24.420Z",
+            "output": {
+                "AppClientSecret": "1av4q8lsskhki1fvd5pksrflh5tiajrfimbt96uj8raafnrdlu07",
+                "UserPoolId": "us-west-2_jMT1jO1rr",
+                "AppClientIDWeb": "7fgbaktd4akvq897hcvdstsko9",
+                "AppClientID": "1f613m7ef8p7ijp66p411c8lbn",
+                "IdentityPoolId": "us-west-2:a30d0f66-56e8-44b9-be6f-33da59303431",
+                "IdentityPoolName": "cognito11ad9152_identitypool_11ad9152",
+                "UserPoolName": "cognito11ad9152_userpool_11ad9152"
+            },
+            "lastPushDirHash": "jauJA/+Yn1OCoL3wj7puxy8n6n4="
+        }
+    },
+    "api": {
+        "photoalbums": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "securityType": "AMAZON_COGNITO_USER_POOLS",
+                "GraphQLAPIIdOutput": "qpfp5oahhrd6bdurtpr2lt2cd4",
+                "GraphQLAPIEndpointOutput": "https://tfmto7zakveetkmdmznxsisb2m.appsync-api.us-west-2.amazonaws.com/graphql",
+                "GraphQLAPIKeyOutput": "da2-7b7zfefwvffivlvimwj5hwfeoi",
+                "AuthCognitoUserPoolIdOutput": "us-west-2_jMT1jO1rr",
+                "AuthCognitoUserPoolNativeClientId": "See UserPool: us-west-2_jMT1jO1rr",
+                "AuthCognitoUserPoolJSClientId": "See UserPool: us-west-2_jMT1jO1rr"
+            },
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/photoalbums-20190106170346-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+                "logicalId": "apiphotoalbums"
+            },
+            "lastPushTimeStamp": "2019-02-02T22:23:24.423Z",
+            "lastPushDirHash": "uhK2fTcGMJ7YrOYbpa8vhgkjcNk="
+        }
+    },
+    "storage": {
+        "photoalbumstorage": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/photoalbums-20190106170346-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+                "logicalId": "storagephotoalbumstorage"
+            },
+            "lastPushTimeStamp": "2019-02-02T22:23:24.423Z",
+            "output": {
+                "BucketName": "photoalbumsce5e0871862f48e0a8adf7fb7ab835fc",
+                "Region": "us-west-2"
+            },
+            "lastPushDirHash": "biqf3MB29PD+rRxSvvV8TvxawIg="
+        }
+    },
+    "hosting": {}
 }

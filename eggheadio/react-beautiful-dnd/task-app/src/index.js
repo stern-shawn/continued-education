@@ -8,8 +8,31 @@ import initialData from './initialData'
 const App = () => {
   const [state, setState] = useState(initialData)
 
-  const onDragEnd = result => {
-    // nothing yet, but this is a required prop
+  const onDragEnd = ({ destination, source, draggableId }) => {
+    console.log('source 🛫: ', source)
+    console.log('destination: 🛬', destination)
+    console.log('draggableId: ', draggableId)
+    // Early exit if destination object is null, ex. the user dropped outside of context
+    if (!destination) return
+
+    // Also check if the location didn't change at all
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return
+
+    const column = state.columns[source.droppableId]
+    const newTaskIds = [...column.taskIds]
+    newTaskIds.splice(source.index, 1) // remove the task id from its previous index
+    newTaskIds.splice(destination.index, 0, draggableId) // insert the task id at its new index
+
+    setState(s => ({
+      ...s,
+      columns: {
+        ...s.columns,
+        [column.id]: {
+          ...column,
+          taskIds: newTaskIds,
+        },
+      },
+    }))
   }
 
   return (

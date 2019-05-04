@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import '@atlaskit/css-reset'
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 
 import initialData from './initialData'
@@ -14,15 +14,16 @@ const Container = styled.div`
 
 const App = () => {
   const [taskState, setTaskState] = useState(initialData)
-  const [homeIndex, setHomeIndex] = useState(0)
+  // const [homeIndex, setHomeIndex] = useState(0)
 
-  const onDragStart = ({ source }) => {
-    const index = taskState.columnOrder.indexOf(source.droppableId)
-    setHomeIndex(index)
-  }
+  // const onDragStart = ({ source }) => {
+  //   const index = taskState.columnOrder.indexOf(source.droppableId)
+  //   setHomeIndex(index)
+  // }
 
-  const onDragEnd = ({ destination, source, draggableId }) => {
-    setHomeIndex(0)
+  const onDragEnd = ({ destination, source, draggableId, type }) => {
+    // setHomeIndex(0)
+    console.log('type 🏷: ', type)
     console.log('source 🛫: ', source)
     console.log('destination 🛬: ', destination)
     console.log('draggableId: ', draggableId)
@@ -31,6 +32,15 @@ const App = () => {
 
     // Also check if the location didn't change at all
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
+
+    if (type === 'column') {
+      const newColumnOrder = [...taskState.columnOrder]
+      newColumnOrder.splice(source.index, 1)
+      newColumnOrder.splice(destination.index, 0, draggableId)
+
+      setTaskState(s => ({ ...s, columnOrder: newColumnOrder }))
+      return
+    }
 
     const start = taskState.columns[source.droppableId]
     const finish = taskState.columns[destination.droppableId]
@@ -78,17 +88,20 @@ const App = () => {
   }
 
   return (
-    <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-      <Container>
-        {taskState.columnOrder.map((columnId, index) => {
-          const column = taskState.columns[columnId]
-          const tasks = column.taskIds.map(taskId => taskState.tasks[taskId])
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="all-columns" direction="horizontal" type="column">
+        {provided => (
+          <Container ref={provided.innerRef} {...provided.droppableProps}>
+            {taskState.columnOrder.map((columnId, index) => {
+              const column = taskState.columns[columnId]
+              const tasks = column.taskIds.map(taskId => taskState.tasks[taskId])
 
-          const isDropDisabled = index < homeIndex
-
-          return <Column key={column.id} column={column} tasks={tasks} isDropDisabled={isDropDisabled} />
-        })}
-      </Container>
+              return <Column key={column.id} column={column} tasks={tasks} index={index} />
+            })}
+            {provided.placeholder}
+          </Container>
+        )}
+      </Droppable>
     </DragDropContext>
   )
 }

@@ -1,11 +1,7 @@
-import fs from 'fs'
+import { CsvFileReader } from './CsvFileReader'
 
-const matches = fs
-  .readFileSync('football.csv', { encoding: 'utf-8' })
-  .split('\n')
-  .map(match => match.split(','))
-
-console.log('matches: ', matches)
+const reader = new CsvFileReader('football.csv')
+reader.read()
 
 enum MatchResult {
   HomeWin = 'H',
@@ -14,7 +10,7 @@ enum MatchResult {
 }
 
 let manUnitedWins = 0
-matches.forEach(match => {
+reader.data.forEach(match => {
   if (
     (match[1] === 'Man United' && match[5] === MatchResult.HomeWin) ||
     (match[2] === 'Man United' && match[5] === MatchResult.AwayWin)

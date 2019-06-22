@@ -18,4 +18,17 @@ export class User {
   constructor(attrs: UserProps) {
     this.attributes = new Attributes<UserProps>(attrs)
   }
+
+  // Pass-through functions from the sub-classes, caller can then  invoke w/ args
+  get get() {
+    return this.attributes.get
+  }
+
+  get on() {
+    return this.events.on
+  }
+
+  get trigger() {
+    return this.events.trigger
+  }
 }

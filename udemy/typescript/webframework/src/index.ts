@@ -2,17 +2,17 @@ import { User } from './models/User'
 
 const user = new User({ id: 1 })
 
-user.events.on('click', () => {
+user.on('click', () => {
   console.log('Click 1')
 })
 
-user.events.on('click', () => {
+user.on('click', () => {
   console.log('Click 2')
 })
 
-user.events.on('change', () => {
+user.on('change', () => {
   console.log('Update 1')
 })
 
-user.events.trigger('click')
-user.events.trigger('change')
+user.trigger('click')
+user.trigger('change')

@@ -6,6 +6,7 @@ interface HasId {
 
 export class Sync<T extends HasId> {
   constructor(public rootUrl: string) {}
+
   fetch(id: number) {
     return axios.get<T>(`${this.rootUrl}/${id}`)
   }

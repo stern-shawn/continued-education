@@ -1,19 +1,15 @@
-import { MatchResult } from './MatchResult'
-import { MatchReader } from './MatchReader'
+import { ConsoleReport } from './reportTargets/ConsoleReport'
 import { CsvFileReader } from './CsvFileReader'
+import { MatchReader } from './MatchReader'
+import { Summary } from './Summary'
+import { WinsAnalysis } from './analyzers/WinsAnalysis'
 
 const csvFileReader = new CsvFileReader('football.csv')
 const matchReader = new MatchReader(csvFileReader)
 matchReader.load()
 
-const manUnitedWins = matchReader.matches.reduce((wins, match) => {
-  if (
-    (match[1] === 'Man United' && match[5] === MatchResult.HomeWin) ||
-    (match[2] === 'Man United' && match[5] === MatchResult.AwayWin)
-  ) {
-    return wins + 1
-  }
-  return wins
-}, 0)
+const manUnitedSummary = new Summary(new WinsAnalysis('Man United'), new ConsoleReport())
+manUnitedSummary.buildAndPrintReport(matchReader.matches)
 
-console.log('Manchester United Won: ', manUnitedWins)
+const wolvesSummary = new Summary(new WinsAnalysis('Liverpool'), new ConsoleReport())
+wolvesSummary.buildAndPrintReport(matchReader.matches)

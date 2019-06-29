@@ -2,15 +2,14 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import Loading from '../components/loading';
-import Header from '../components/header';
-import ActionButton from '../containers/action-button';
-import LaunchDetail from '../components/launch-detail';
 import { LAUNCH_TILE_DATA } from './launches';
+import { Loading, Header, LaunchDetail } from '../components';
+import { ActionButton } from '../containers';
 
 export const GET_LAUNCH_DETAILS = gql`
   query LaunchDetails($launchId: ID!) {
     launch(id: $launchId) {
+      isInCart @client
       site
       rocket {
         type
@@ -21,13 +20,12 @@ export const GET_LAUNCH_DETAILS = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-const Launch = ({ launchId }) => (
+export default ({ launchId }) => (
   <Query query={GET_LAUNCH_DETAILS} variables={{ launchId }}>
     {({ data, loading, error }) => {
       if (loading) return <Loading />;
       if (error) return <p>ERROR: {error.message}</p>;
 
-      console.log('data: ', data);
       return (
         <>
           <Header image={data.launch.mission.missionPatch}>{data.launch.mission.name}</Header>
@@ -38,5 +36,3 @@ const Launch = ({ launchId }) => (
     }}
   </Query>
 );
-
-export default Launch;

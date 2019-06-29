@@ -1,5 +1,5 @@
 import styled from 'react-emotion';
-import { lighten } from 'polished';
+import { lighten, darken } from 'polished';
 
 import { unit, colors } from '../styles';
 
@@ -26,5 +26,8 @@ export default styled('button')({
   },
   ':active': {
     backgroundColor: lighten(0.2, colors.accent),
+  },
+  ':disabled': {
+    backgroundColor: darken(0.2, colors.accent),
   },
 });

@@ -34,10 +34,12 @@ export const GET_LAUNCHES = gql`
 `;
 
 export default () => (
-  <Query query={GET_LAUNCHES}>
-    {({ data, loading, error, fetchMore }) => {
-      if (loading) return <Loading />;
+  <Query query={GET_LAUNCHES} notifyOnNetworkStatusChange>
+    {({ data, loading, error, fetchMore, networkStatus }) => {
+      if (loading && networkStatus !== 3) return <Loading />;
       if (error) return <p>ERROR</p>;
+
+      const isLoadingMore = loading && networkStatus === 3;
 
       return (
         <>
@@ -47,6 +49,7 @@ export default () => (
             data.launches.launches.map(launch => <LaunchTile key={launch.id} launch={launch} />)}
           {data.launches && data.launches.hasMore && (
             <Button
+              disabled={isLoadingMore}
               onClick={() =>
                 fetchMore({
                   variables: {
@@ -65,7 +68,7 @@ export default () => (
                 })
               }
             >
-              Load More
+              {`Load${isLoadingMore ? 'ing' : ''} More`}
             </Button>
           )}
         </>

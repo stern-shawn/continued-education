@@ -1,61 +1,41 @@
-import Layout from "../components/MyLayout";
-import Link from "next/link";
-import fetch from "isomorphic-unfetch";
+import useSWR from "swr";
 
-const ShowLink = ({ show }) => (
-  <li key={show.id}>
-    <Link href="/p/[id]" as={`/p/${show.id}`}>
-      <a>{show.name}</a>
-    </Link>
-    <style jsx>{`
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
+const fetcher = url => fetch(url).then(r => r.json());
 
-      a {
-        text-decoration: none;
-        color: blue;
-        font-family: "Arial";
-      }
+export default function Index() {
+  const { data, error } = useSWR("/api/randomQuote", fetcher);
+  // The following line has optional chaining, added in Next.js v9.1.5,
+  // is the same as `data && data.author`
+  const author = data?.author;
+  let quote = data?.quote;
 
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
-  </li>
-);
+  if (!data) quote = "Loading...";
+  if (error) quote = "Failed to fetch the quote.";
 
-const Index = ({ shows }) => (
-  <Layout>
-    <h1>Batman TV Shows</h1>
-    <ul>
-      {shows.map(show => (
-        <ShowLink show={show} />
-      ))}
-    </ul>
-    <style jsx>{`
-      h1,
-      a {
-        font-family: "Arial";
-      }
+  return (
+    <main className="center">
+      <div className="quote">{quote}</div>
+      {author && <span className="author">- {author}</span>}
 
-      ul {
-        padding: 0;
-      }
-    `}</style>
-  </Layout>
-);
-
-Index.getInitialProps = async () => {
-  const res = await fetch("https://api.tvmaze.com/search/shows?q=batman");
-  const data = await res.json();
-
-  console.log(`Show data fetched. Count: ${data.length}`);
-
-  return {
-    shows: data.map(entry => entry.show)
-  };
-};
-
-export default Index;
+      <style jsx>{`
+        main {
+          width: 90%;
+          max-width: 900px;
+          margin: 300px auto;
+          text-align: center;
+        }
+        .quote {
+          font-family: cursive;
+          color: #e243de;
+          font-size: 24px;
+          padding-bottom: 10px;
+        }
+        .author {
+          font-family: sans-serif;
+          color: #559834;
+          font-size: 20px;
+        }
+      `}</style>
+    </main>
+  );
+}

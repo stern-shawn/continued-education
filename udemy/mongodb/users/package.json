@@ -11,7 +11,7 @@
   "dependencies": {
     "dotenv": "^4.0.0",
     "mocha": "^3.4.2",
-    "mongoose": "^4.11.3",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.11.0"
   },
   "devDependencies": {

@@ -28,13 +28,24 @@ app.post('/events', async (req, res) => {
   if (type === 'CommentCreated') {
     console.log('CommentCreated Event');
 
-    const { id, content, postId } = data;
+    const { id, content, postId, status } = data;
     const post = posts[postId];
-    if (post) post.comments.push({ id, content });
+    if (post) post.comments.push({ id, content, status });
+  }
+
+  if (type === 'CommentUpdated') {
+    console.log('CommentUpdated event, updating');
+    const { id, postId, content, status } = data;
+
+    const { comments } = posts[postId];
+    const commentToUpdate = comments.find((c) => c.id === id);
+
+    commentToUpdate.status = status;
+    commentToUpdate.content = content;
   }
 
   console.log('Event Processed');
-  console.log('posts: ', posts);
+  console.log('posts: ', JSON.stringify(posts, null, 2));
 
   res.send({});
 });

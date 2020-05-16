@@ -16,7 +16,11 @@ export default function CommentCreate({ postId }) {
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>New Comment</label>
-          <input className="form-control" value={comment} onChange={(e) => setComment(e.target.value)} />
+          <input
+            className="form-control"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
         </div>
         <button className="btn btn-primary">Submit</button>
       </form>

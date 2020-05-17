@@ -1,23 +1,22 @@
 import React from 'react';
 
+const getCommentContent = (comment) => {
+  const statusToContentMap = {
+    pending: 'This comment is awaiting moderation',
+    approved: comment.content,
+    rejected: 'This comment has been rejected',
+  };
+
+  return statusToContentMap[comment.status];
+};
+
 export default function CommentList({ comments }) {
   return (
     <div>
       <ul>
-        {comments.map((comment) => {
-          let content;
-          if (comment.status === 'approved') {
-            content = comment.content;
-          }
-          if (comment.status === 'pending') {
-            content = 'This comment is awaiting moderation';
-          }
-          if (comment.status === 'rejected') {
-            content = 'This comment has been rejected';
-          }
-
-          return <li key={comment.id}>{content}</li>;
-        })}
+        {comments.map((comment) => (
+          <li key={comment.id}>{getCommentContent(comment)}</li>
+        ))}
       </ul>
     </div>
   );

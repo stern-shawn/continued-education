@@ -28,8 +28,6 @@ app.post('/posts', async (req, res) => {
 
 app.post('/events', async (req, res) => {
   const { type, data } = req.body;
-  console.log('Event Received: ', JSON.stringify(req.body, null, 2));
-
   res.send({});
 });
 

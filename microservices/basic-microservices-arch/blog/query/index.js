@@ -50,7 +50,7 @@ app.listen(PORT, async () => {
   console.log(`Listening on port ${PORT}`);
 
   // Reach out to event bus for a history of all events while this service was down, and synchronize
-  const { data: events } = await axios.get('http://localhost:4005/events');
+  const { data: events } = await axios.get('http://event-bus-srv:4005/events');
 
   events.forEach(({ type, data }) => {
     console.log('Processing event: ', type);

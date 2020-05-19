@@ -21,7 +21,7 @@ app.post('/posts', async (req, res) => {
 
   posts[id] = { id, title };
 
-  await axios.post('http://localhost:4005/events', { type: 'PostCreated', data: posts[id] });
+  await axios.post(`http://event-bus-srv:4005/events`, { type: 'PostCreated', data: posts[id] });
 
   res.status(201).send(posts[id]);
 });
@@ -32,5 +32,6 @@ app.post('/events', async (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log('v3, testing k8s deployments with rollouts/restart');
   console.log(`Listening on port ${PORT}`);
 });

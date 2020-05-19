@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts
+  template:
+    metadata:
+      labels:
+        app: posts # This allows posts-srv to select posts pods via selector
+    spec:
+      containers:
+        - name: posts
+          image: sternshawn/posts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv # using a diff name since we already have a posts NodePort service running as posts-srv
+spec:
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

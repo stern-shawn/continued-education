@@ -14,10 +14,10 @@ app.post('/events', (req, res) => {
   const event = req.body;
   events.push(event);
 
-  axios.post('http://localhost:4000/events', event); // Posts
-  axios.post('http://localhost:4001/events', event); // Comments
-  axios.post('http://localhost:4002/events', event); // Query
-  axios.post('http://localhost:4003/events', event); // Comment moderation
+  axios.post('http://posts-clusterip-srv:4000/events', event); // Posts
+  axios.post('http://comments-srv:4001/events', event); // Comments
+  axios.post('http://query-srv:4002/events', event); // Query
+  axios.post('http://moderation-srv:4003/events', event); // Comment moderation
 
   res.send({ status: 'OK' });
 });

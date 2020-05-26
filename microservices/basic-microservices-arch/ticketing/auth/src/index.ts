@@ -10,9 +10,18 @@ import { signOutRouter } from './routes/signout';
 import { signUpRouter } from './routes/signup';
 import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
+import { UserPayload } from './middlewares/current-user';
 
 const PORT = 3000;
 const app = express();
+
+declare global {
+  namespace Express {
+    interface Request {
+      currentUser?: UserPayload;
+    }
+  }
+}
 
 // Trust the ngnix proxy
 app.set('trust proxy', true);

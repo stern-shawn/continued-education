@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Password } from '../services/password';
+import { PasswordUtils } from '../services/password';
 
 // Attributes necessary to create a user
 export interface UserAttrs {
@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre('save', async function (done) {
   if (this.isModified('password')) {
-    const hashed = await Password.toHash(this.get('password'));
+    const hashed = await PasswordUtils.toHash(this.get('password'));
     this.set('password', hashed);
   }
   done();

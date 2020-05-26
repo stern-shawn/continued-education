@@ -1,8 +1,11 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
+import jwt from 'jsonwebtoken';
 
-import { UserAttrs } from '../models/user';
+import { UserAttrs, User } from '../models/user';
 import { validateRequest } from '../middlewares/validate-request';
+import { BadRequestError } from '../errors/bad-request-error';
+import { PasswordUtils } from '../services/password';
 
 const router = express.Router();
 
@@ -15,6 +18,32 @@ router.post(
   validateRequest,
   async (req: Request<any, any, UserAttrs>, res: Response) => {
     const { email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      console.log('No user');
+      throw new BadRequestError('Invalid credentials');
+    }
+
+    const passwordsMatch = await PasswordUtils.compare(existingUser.password, password);
+    if (!passwordsMatch) {
+      console.log('Bad password');
+      throw new BadRequestError('Invalid credentials');
+    }
+
+    const userJwt = jwt.sign(
+      {
+        id: existingUser.id,
+        email: existingUser.email,
+      },
+      process.env.JWT_KEY!
+    );
+
+    req.session = {
+      jwt: userJwt,
+    };
+
+    res.status(200).send(existingUser);
   }
 );
 

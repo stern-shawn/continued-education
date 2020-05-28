@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 
-const signupUri = '/api/users/signup';
+export const signupUri = '/api/users/signup';
 const email = 'test@test.com';
 const password = 'password';
 
@@ -10,26 +10,26 @@ const invalidPassword = 'p';
 
 describe('Signup', () => {
   it('returns a 201 on successful signup', async () => {
-    return request(app).post(signupUri).send({ email, password }).expect(201);
+    await request(app).post(signupUri).send({ email, password }).expect(201);
   });
 
   it('returns a 400 for invalid email', async () => {
-    return request(app).post(signupUri).send({ email: invalidEmail, password }).expect(400);
+    await request(app).post(signupUri).send({ email: invalidEmail, password }).expect(400);
   });
 
   it('returns a 400 for invalid password', async () => {
-    return request(app).post(signupUri).send({ email, password: invalidPassword }).expect(400);
+    await request(app).post(signupUri).send({ email, password: invalidPassword }).expect(400);
   });
 
   it('returns a 400 for missing email and password', async () => {
     await request(app).post(signupUri).send({}).expect(400);
     await request(app).post(signupUri).send({ email }).expect(400);
-    return request(app).post(signupUri).send({ password: invalidPassword }).expect(400);
+    await request(app).post(signupUri).send({ password: invalidPassword }).expect(400);
   });
 
   it('disallows duplicate emails', async () => {
     await request(app).post(signupUri).send({ email, password }).expect(201);
-    return request(app).post(signupUri).send({ email, password }).expect(400);
+    await request(app).post(signupUri).send({ email, password }).expect(400);
   });
 
   it('sets a cookie after successful signup', async () => {

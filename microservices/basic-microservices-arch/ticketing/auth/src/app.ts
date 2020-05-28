@@ -28,7 +28,8 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false,
-    secure: true,
+    // Supertest makes plain http requests; disable https requirement in test env
+    secure: process.env.NODE_ENV !== 'test',
   })
 );
 app.use(currentUserRouter);

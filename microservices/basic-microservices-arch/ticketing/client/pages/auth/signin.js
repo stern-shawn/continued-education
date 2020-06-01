@@ -1,3 +1,3 @@
-import { AuthForm } from '../../components/authForm';
+import { AuthForm } from '../../components/AuthForm';
 
 export default () => <AuthForm isSignIn />;

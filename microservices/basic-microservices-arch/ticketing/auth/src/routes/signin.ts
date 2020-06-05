@@ -1,10 +1,9 @@
+import { validateRequest, BadRequestError } from '@sstickets/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
 
 import { UserAttrs, User } from '../models/user';
-import { validateRequest } from '../middlewares/validate-request';
-import { BadRequestError } from '../errors/bad-request-error';
 import { PasswordUtils } from '../services/password';
 
 const router = express.Router();

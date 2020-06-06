@@ -5,12 +5,12 @@ deploy:
     manifests:
       - ./infra/k8s/*
 build:
-  # local:
-  #   push: false
-  googleCloudBuild:
-    projectId: ticketing-dev-278103
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: ticketing-dev-278103
   artifacts:
-    - image: us.gcr.io/ticketing-dev-278103/auth
+    - image: sternshawn/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -18,11 +18,19 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-278103/client
+    - image: sternshawn/client
       context: client
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: '**/*.js'
+            dest: .
+    - image: sternshawn/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
             dest: .

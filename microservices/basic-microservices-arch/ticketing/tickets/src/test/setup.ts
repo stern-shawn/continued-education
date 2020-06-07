@@ -1,14 +1,11 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import request from 'supertest';
-
-import { app } from '../app';
-import { signupUri } from '../routes/__test__/signup.test';
+import jwt from 'jsonwebtoken';
 
 declare global {
   namespace NodeJS {
     interface Global {
-      signin: () => Promise<{ cookie: string[]; email: string; password: string }>;
+      signin(): string[];
     }
   }
 }
@@ -16,7 +13,8 @@ declare global {
 let mongo: MongoMemoryServer;
 
 beforeAll(async () => {
-  process.env.JWT_KEY = 'workaround for testing';
+  process.env.JWT_KEY = 'test key';
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();
@@ -40,14 +38,25 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async () => {
-  const email = 'test@test.com';
-  const password = 'password';
+global.signin = () => {
+  // Build a JWT payload.  { id, email }
+  const payload = {
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: 'test@test.com',
+  };
 
-  const response = await request(app).post(signupUri).send({ email, password }).expect(201);
-  // Supertest doesn't automatically manage cookies for us like browsers or postman does, we'll need
-  // to capture it and manually append to requests to mimic working cookies :)
-  const cookie = response.get('Set-Cookie');
+  // Create the JWT!
+  const token = jwt.sign(payload, process.env.JWT_KEY!);
 
-  return { cookie, email, password };
+  // Build session Object. { jwt: MY_JWT }
+  const session = { jwt: token };
+
+  // Turn that session into JSON
+  const sessionJSON = JSON.stringify(session);
+
+  // Take JSON and encode it as base64
+  const base64 = Buffer.from(sessionJSON).toString('base64');
+
+  // return a string thats the cookie with the encoded data
+  return [`express:sess=${base64}`];
 };

@@ -6,16 +6,30 @@ import { natsClient } from './nats-client';
 const PORT = 3000;
 
 const start = async () => {
-  if (!process.env.JWT_KEY) {
+  const { JWT_KEY, MONGO_URI, NATS_URI, NATS_CLUSTER_ID, NATS_CLIENT_ID } = process.env;
+
+  if (!JWT_KEY) {
     throw new Error('JWT_KEY not defined!');
   }
 
-  if (!process.env.MONGO_URI) {
+  if (!MONGO_URI) {
     throw new Error('MONGO_URI not defined!');
   }
 
+  if (!NATS_URI) {
+    throw new Error('NATS_URI not defined!');
+  }
+
+  if (!NATS_CLUSTER_ID) {
+    throw new Error('NATS_CLUSTER_ID not defined!');
+  }
+
+  if (!NATS_CLIENT_ID) {
+    throw new Error('NATS_CLIENT_ID not defined!');
+  }
+
   try {
-    await natsClient.connect('ticketing', 'test', 'http://nats-srv:4222');
+    await natsClient.connect(NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URI);
     natsClient.client.on('close', () => {
       console.log('NATS connection closed');
       process.exit();
@@ -23,7 +37,7 @@ const start = async () => {
     process.on('SIGINT', () => natsClient.client.close());
     process.on('SIGTERM', () => natsClient.client.close());
 
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,

@@ -1,7 +1,10 @@
 import { validateRequest, NotFoundError, requireAuth, NotAuthorizedError } from '@sstickets/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
+
 import { Ticket } from '../models/ticket';
+import { natsClient } from '../nats-client';
+import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
 
 const router = express.Router();
 
@@ -28,6 +31,13 @@ router.put(
     ticket.set({ title, price });
 
     await ticket.save();
+
+    new TicketUpdatedPublisher(natsClient.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
 
     res.send(ticket);
   }

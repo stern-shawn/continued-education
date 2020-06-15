@@ -36,6 +36,7 @@ router.post(
     );
 
     // Store on the session object
+    // @ts-ignore
     req.session = {
       jwt: userJwt,
     };

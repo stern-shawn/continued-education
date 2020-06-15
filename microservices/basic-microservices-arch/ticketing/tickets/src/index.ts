@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import { app } from './app';
+import { natsClient } from './nats-client';
 
 const PORT = 3000;
 
@@ -14,6 +15,7 @@ const start = async () => {
   }
 
   try {
+    await natsClient.connect('ticketing', 'test', 'http://nats-srv:4222');
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

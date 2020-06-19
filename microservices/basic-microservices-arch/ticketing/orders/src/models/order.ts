@@ -37,7 +37,7 @@ const orderSchema = new mongoose.Schema(
     },
     ticket: {
       type: mongoose.Schema.Types.ObjectId,
-      red: 'Ticket',
+      ref: 'Ticket',
     },
   },
   {

@@ -7,7 +7,7 @@ export { OrderStatus };
 interface OrderAttrs {
   userId: string;
   status: OrderStatus;
-  expiresAt: number;
+  expiresAt: Date;
   ticket: TicketDoc;
 }
 

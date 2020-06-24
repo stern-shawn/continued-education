@@ -25,14 +25,12 @@ router.post(
     const { ticketId } = req.body;
     // Find the ticket the user is trying to order
     const ticket = await Ticket.findById(ticketId);
-    if (!ticket) {
-      throw new NotFoundError();
-    }
+    if (!ticket) throw new NotFoundError();
+
     // Make sure it isn't already reserved
     const isReserved = await ticket.isReserved();
-    if (isReserved) {
-      throw new BadRequestError('Ticket is already reserved');
-    }
+    if (isReserved) throw new BadRequestError('Ticket is already reserved');
+
     // Calculate an exp date so the ticket can free up for other users
     const expiration = new Date();
     expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);

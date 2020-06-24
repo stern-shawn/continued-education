@@ -1,6 +1,6 @@
 import { requireAuth, NotFoundError, NotAuthorizedError, OrderStatus } from '@sstickets/common';
 import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
+import { param } from 'express-validator';
 import mongoose from 'mongoose';
 import { Order } from '../models/order';
 
@@ -10,7 +10,7 @@ router.delete(
   '/api/orders/:orderId',
   requireAuth,
   [
-    body('orderId')
+    param('orderId')
       .not()
       .isEmpty()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))

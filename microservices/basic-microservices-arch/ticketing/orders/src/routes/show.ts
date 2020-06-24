@@ -1,6 +1,6 @@
 import { requireAuth, NotFoundError, NotAuthorizedError } from '@sstickets/common';
 import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
+import { param } from 'express-validator';
 import mongoose from 'mongoose';
 
 import { Order } from '../models/order';
@@ -11,7 +11,7 @@ router.get(
   '/api/orders/:orderId',
   requireAuth,
   [
-    body('orderId')
+    param('orderId')
       .not()
       .isEmpty()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))

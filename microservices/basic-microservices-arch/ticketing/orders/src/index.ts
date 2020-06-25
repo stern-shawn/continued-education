@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 
 import { app } from './app';
 import { natsClient } from './nats-client';
+import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
+import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener';
 
 const PORT = 3000;
 
@@ -36,6 +38,10 @@ const start = async () => {
     });
     process.on('SIGINT', () => natsClient.client.close());
     process.on('SIGTERM', () => natsClient.client.close());
+
+    // Attach amd start listeners!
+    new TicketCreatedListener(natsClient.client).listen();
+    new TicketUpdatedListener(natsClient.client).listen();
 
     await mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,

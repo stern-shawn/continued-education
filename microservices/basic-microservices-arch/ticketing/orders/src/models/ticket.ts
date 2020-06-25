@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 import { Order, OrderStatus } from './order';
 
@@ -11,6 +12,7 @@ interface TicketAttrs {
 export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
+  version: number;
   isReserved(): Promise<boolean>;
 }
 
@@ -39,6 +41,10 @@ const ticketSchema = new mongoose.Schema(
     },
   }
 );
+
+// Bring in OCC from tickets service
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 // We need to force the mongo _id so we have stable ids across services
 ticketSchema.statics.build = ({ id, ...attrs }: TicketAttrs) => new Ticket({ _id: id, ...attrs });

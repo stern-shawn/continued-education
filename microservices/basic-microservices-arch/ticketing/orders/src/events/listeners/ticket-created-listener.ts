@@ -9,9 +9,10 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
 
   async onMessage(data: TicketCreatedEvent['data'], msg: Message) {
     console.log('Ticket created event received by orders service', data);
-    const { title, price } = data;
+    const { id, title, price } = data;
 
-    const ticket = Ticket.build({ title, price });
+    // Provide id so we have a stable id between services, gets aliased to mongo _id in build
+    const ticket = Ticket.build({ id, title, price });
     await ticket.save();
 
     msg.ack();

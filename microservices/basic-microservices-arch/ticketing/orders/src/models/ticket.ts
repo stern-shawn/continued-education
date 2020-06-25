@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { Order, OrderStatus } from './order';
 
 interface TicketAttrs {
+  id: string;
   title: string;
   price: number;
 }
@@ -39,7 +40,8 @@ const ticketSchema = new mongoose.Schema(
   }
 );
 
-ticketSchema.statics.build = (attrs: TicketAttrs) => new Ticket(attrs);
+// We need to force the mongo _id so we have stable ids across services
+ticketSchema.statics.build = ({ id, ...attrs }: TicketAttrs) => new Ticket({ _id: id, ...attrs });
 
 ticketSchema.methods.isReserved = async function () {
   // In this function, `this` references the current ticket

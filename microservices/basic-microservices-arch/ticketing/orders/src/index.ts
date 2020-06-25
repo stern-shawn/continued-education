@@ -39,7 +39,7 @@ const start = async () => {
     process.on('SIGINT', () => natsClient.client.close());
     process.on('SIGTERM', () => natsClient.client.close());
 
-    // Attach amd start listeners!
+    // Attach and start listeners!
     new TicketCreatedListener(natsClient.client).listen();
     new TicketUpdatedListener(natsClient.client).listen();
 

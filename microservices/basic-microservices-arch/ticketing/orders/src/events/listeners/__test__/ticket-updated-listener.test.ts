@@ -50,4 +50,16 @@ describe('Ticket updated listener', () => {
 
     expect(msg.ack).toHaveBeenCalled();
   });
+
+  it('handles out of order events by not calling ack for wrong versions', async () => {
+    const { listener, data, msg } = await setup();
+
+    data.version = 4;
+
+    try {
+      await listener.onMessage(data, msg);
+    } catch (e) {}
+
+    expect(msg.ack).not.toHaveBeenCalled();
+  });
 });

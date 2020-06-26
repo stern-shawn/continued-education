@@ -1,4 +1,4 @@
-import { validateRequest, NotFoundError, requireAuth, NotAuthorizedError } from '@sstickets/common';
+import { validateRequest, NotFoundError, requireAuth, NotAuthorizedError, BadRequestError } from '@sstickets/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 
@@ -20,13 +20,11 @@ router.put(
     const ticket = await Ticket.findById(req.params.id);
     const { title, price } = req.body;
 
-    if (!ticket) {
-      throw new NotFoundError();
-    }
+    if (!ticket) throw new NotFoundError();
 
-    if (ticket.userId !== req.currentUser?.id) {
-      throw new NotAuthorizedError();
-    }
+    if (ticket.userId !== req.currentUser?.id) throw new NotAuthorizedError();
+
+    if (ticket.orderId) throw new BadRequestError('Cannot edit a reserved ticket');
 
     ticket.set({ title, price });
 
@@ -34,6 +32,7 @@ router.put(
 
     new TicketUpdatedPublisher(natsClient.client).publish({
       id: ticket.id,
+      version: ticket.version,
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,

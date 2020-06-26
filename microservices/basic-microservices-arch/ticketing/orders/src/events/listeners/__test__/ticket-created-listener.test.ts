@@ -9,7 +9,7 @@ import { Ticket } from '../../../models/ticket';
 const setup = async () => {
   // Create listener instance
   const listener = new TicketCreatedListener(natsClient.client);
-  // fake data event
+  // fake data object
   const data: TicketCreatedEvent['data'] = {
     version: 0,
     id: new mongoose.Types.ObjectId().toHexString(),

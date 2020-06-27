@@ -8,7 +8,6 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   readonly queueGroupName = queueGroupName;
 
   async onMessage(data: TicketCreatedEvent['data'], msg: Message) {
-    console.log('Ticket created event received by orders service', data);
     const { id, title, price } = data;
 
     // Provide id so we have a stable id between services, gets aliased to mongo _id in build

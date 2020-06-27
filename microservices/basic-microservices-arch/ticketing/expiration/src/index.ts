@@ -1,14 +1,11 @@
 import { natsClient } from './nats-client';
-
-const PORT = 3000;
+import { OrderCreatedListener } from './listeners/order-created-listener';
 
 const start = async () => {
   const { NATS_URI, NATS_CLUSTER_ID, NATS_CLIENT_ID } = process.env;
 
   if (!NATS_URI) throw new Error('NATS_URI not defined!');
-
   if (!NATS_CLUSTER_ID) throw new Error('NATS_CLUSTER_ID not defined!');
-
   if (!NATS_CLIENT_ID) throw new Error('NATS_CLIENT_ID not defined!');
 
   try {
@@ -21,6 +18,7 @@ const start = async () => {
     process.on('SIGTERM', () => natsClient.client.close());
 
     // Attach our listeners!
+    new OrderCreatedListener(natsClient.client).listen();
   } catch (err) {
     console.error(err);
   }

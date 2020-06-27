@@ -15,6 +15,8 @@ export class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent
     const order = await Order.findById(orderId).populate('ticket');
 
     if (!order) throw new Error('Order not found');
+    // Don't cancel orders that have already been paid for! (user will likely pay within the 15 minute expiration window, so we don't want this event to clobber successful orders)
+    if (order.status === OrderStatus.Complete) return msg.ack();
 
     // Note that we aren't wiping out the ticket record when cancelling (not part of the lookup logic,
     // also lets users view what ticket was part of the cancelled order)

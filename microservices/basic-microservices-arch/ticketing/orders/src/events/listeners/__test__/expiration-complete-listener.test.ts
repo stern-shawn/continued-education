@@ -1,4 +1,4 @@
-import { TicketCreatedEvent, OrderStatus, ExpirationCompleteEvent } from '@sstickets/common';
+import { OrderStatus, ExpirationCompleteEvent } from '@sstickets/common';
 import mongoose from 'mongoose';
 import { Message } from 'node-nats-streaming';
 
@@ -67,5 +67,21 @@ describe('Expiration complete listener', () => {
     await listener.onMessage(data, msg);
 
     expect(msg.ack).toHaveBeenCalled();
+  });
+
+  it('does not cancel orders that have already completed and does not publish the cancelled event', async () => {
+    const { listener, order, data, msg } = await setup();
+
+    order.set({ status: OrderStatus.Complete });
+    await order.save();
+
+    await listener.onMessage(data, msg);
+
+    const updatedOrder = await Order.findById(order.id);
+
+    expect(updatedOrder).toBeDefined();
+    expect(updatedOrder!.status).toEqual(OrderStatus.Complete);
+
+    expect(natsClient.client.publish).not.toHaveBeenCalled();
   });
 });

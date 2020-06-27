@@ -1,4 +1,4 @@
-import { Listener, Subjects, OrderCreatedEvent, NotFoundError } from '@sstickets/common';
+import { Listener, Subjects, OrderCreatedEvent } from '@sstickets/common';
 import { Message } from 'node-nats-streaming';
 import { queueGroupName } from './queue-group-name';
 import { Ticket } from '../../models/ticket';
@@ -9,7 +9,6 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   readonly queueGroupName = queueGroupName;
 
   async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
-    console.log('Order created event received by tickets service', data);
     const ticket = await Ticket.findById(data.ticket.id);
 
     if (!ticket) throw new Error('Ticket not found');

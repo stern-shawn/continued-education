@@ -1,4 +1,10 @@
-import { requireAuth, validateRequest, NotFoundError, OrderStatus, BadRequestError } from '@sstickets/common';
+import {
+  requireAuth,
+  validateRequest,
+  NotFoundError,
+  OrderStatus,
+  BadRequestError,
+} from '@sstickets/common';
 import mongoose from 'mongoose';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';

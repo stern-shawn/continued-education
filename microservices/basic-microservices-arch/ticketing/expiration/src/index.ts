@@ -1,5 +1,5 @@
 import { natsClient } from './nats-client';
-import { OrderCreatedListener } from './listeners/order-created-listener';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 
 const start = async () => {
   const { NATS_URI, NATS_CLUSTER_ID, NATS_CLIENT_ID } = process.env;

@@ -4,7 +4,6 @@ import request from 'supertest';
 
 import { app } from '../../app';
 import { Order } from '../../models/order';
-import { natsClient } from '../../nats-client';
 import { stripe } from '../../stripe';
 import { Payment } from '../../models/payment';
 

@@ -6,6 +6,7 @@ import { app } from '../../app';
 import { Order } from '../../models/order';
 import { natsClient } from '../../nats-client';
 import { stripe } from '../../stripe';
+import { Payment } from '../../models/payment';
 
 jest.mock('../../stripe');
 
@@ -71,7 +72,7 @@ it('returns a 400 when purchasing a cancelled order', async () => {
     .expect(400);
 });
 
-it('returns a 204 for valid inputs', async () => {
+it('returns a 201 for valid inputs and creates a payment', async () => {
   const userId = mongoose.Types.ObjectId().toHexString();
   const order = Order.build({
     id: mongoose.Types.ObjectId().toHexString(),
@@ -97,4 +98,8 @@ it('returns a 204 for valid inputs', async () => {
     currency: 'usd',
     source: 'tok_visa',
   });
+
+  const payment = await Payment.findOne({ orderId: order.id });
+
+  expect(payment).not.toBeNull();
 });

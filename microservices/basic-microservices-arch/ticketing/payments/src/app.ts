@@ -4,6 +4,8 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
+import { createChargeRouter } from './routes/new';
+
 const app = express();
 
 // Trust the ngnix proxy
@@ -18,6 +20,8 @@ app.use(
   })
 );
 app.use(currentUser);
+
+app.use(createChargeRouter);
 
 // 404 handling
 app.all('*', async () => {

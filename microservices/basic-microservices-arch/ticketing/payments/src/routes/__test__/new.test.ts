@@ -1,10 +1,13 @@
+import { OrderStatus } from '@sstickets/common';
+import mongoose from 'mongoose';
 import request from 'supertest';
 
 import { app } from '../../app';
 import { Order } from '../../models/order';
 import { natsClient } from '../../nats-client';
-import mongoose from 'mongoose';
-import { OrderStatus } from '@sstickets/common';
+import { stripe } from '../../stripe';
+
+jest.mock('../../stripe');
 
 const newPaymentsRoute = '/api/payments';
 
@@ -66,4 +69,32 @@ it('returns a 400 when purchasing a cancelled order', async () => {
       token: 'test',
     })
     .expect(400);
+});
+
+it('returns a 204 for valid inputs', async () => {
+  const userId = mongoose.Types.ObjectId().toHexString();
+  const order = Order.build({
+    id: mongoose.Types.ObjectId().toHexString(),
+    userId,
+    version: 0,
+    price: 20,
+    status: OrderStatus.Created,
+  });
+  await order.save();
+
+  await request(app)
+    .post(newPaymentsRoute)
+    .set('Cookie', global.signin(userId))
+    .send({
+      orderId: order.id,
+      token: 'tok_visa',
+    })
+    .expect(201);
+
+  expect(stripe.charges.create).toHaveBeenCalled();
+  expect(stripe.charges.create).toHaveBeenCalledWith({
+    amount: order.price * 100,
+    currency: 'usd',
+    source: 'tok_visa',
+  });
 });

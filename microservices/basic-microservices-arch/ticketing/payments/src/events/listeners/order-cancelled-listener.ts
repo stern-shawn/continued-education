@@ -1,30 +1,20 @@
-import { Listener, Subjects, OrderCancelledEvent } from '@sstickets/common';
+import { Listener, Subjects, OrderCancelledEvent, OrderStatus } from '@sstickets/common';
 import { Message } from 'node-nats-streaming';
+
 import { queueGroupName } from './queue-group-name';
-import { Ticket } from '../../models/ticket';
-import { TicketUpdatedPublisher } from '../publishers/ticket-updated-publisher';
+import { Order } from '../../models/order';
 
 export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
   readonly subject = Subjects.OrderCancelled;
   readonly queueGroupName = queueGroupName;
 
   async onMessage(data: OrderCancelledEvent['data'], msg: Message) {
-    const ticket = await Ticket.findById(data.ticket.id);
+    const order = await Order.findOne({ _id: data.id, version: data.version - 1 });
 
-    if (!ticket) throw new Error('Ticket not found');
+    if (!order) throw new Error('Order not found');
 
-    // Unreserved tickets have an undefined orderId :)
-    ticket.set({ orderId: undefined });
-    await ticket.save();
-
-    await new TicketUpdatedPublisher(this.client).publish({
-      id: ticket.id,
-      price: ticket.price,
-      title: ticket.title,
-      userId: ticket.userId,
-      version: ticket.version,
-      orderId: ticket.orderId,
-    });
+    order.set({ status: OrderStatus.Cancelled });
+    await order.save();
 
     msg.ack();
   }

@@ -8,9 +8,10 @@ import { OrderCancelledListener } from './events/listeners/order-cancelled-liste
 const PORT = 3000;
 
 const start = async () => {
-  const { JWT_KEY, MONGO_URI, NATS_URI, NATS_CLUSTER_ID, NATS_CLIENT_ID } = process.env;
+  const { JWT_KEY, STRIPE_KEY, MONGO_URI, NATS_URI, NATS_CLUSTER_ID, NATS_CLIENT_ID } = process.env;
 
   if (!JWT_KEY) throw new Error('JWT_KEY not defined!');
+  if (!STRIPE_KEY) throw new Error('STRIPE_KEY not defined!');
   if (!MONGO_URI) throw new Error('MONGO_URI not defined!');
   if (!NATS_URI) throw new Error('NATS_URI not defined!');
   if (!NATS_CLUSTER_ID) throw new Error('NATS_CLUSTER_ID not defined!');

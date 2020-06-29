@@ -30,7 +30,7 @@ const setup = async () => {
   return { listener, ticket, data, msg };
 };
 
-describe('Order created listener', () => {
+describe('Order cancelled listener', () => {
   it('updates the ticket, publishes the event, and acks the message', async () => {
     const { listener, ticket, data, msg } = await setup();
 

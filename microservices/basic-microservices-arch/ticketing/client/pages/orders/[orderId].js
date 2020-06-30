@@ -1,7 +1,7 @@
-import { useRequest } from '../../hooks/useRequest';
 import { useEffect, useState } from 'react';
+import StripeCheckout from 'react-stripe-checkout';
 
-const OrderDetails = ({ order }) => {
+const OrderDetails = ({ currentUser, order }) => {
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
@@ -30,6 +30,12 @@ const OrderDetails = ({ order }) => {
     <div>
       <h1>Order</h1>
       <p>Time left to purchase: {timeLeft} seconds</p>
+      <StripeCheckout
+        amount={order.ticket.price * 100}
+        email={currentUser.email}
+        stripeKey="pk_test_zocXJDydz3EqYJxc3JGDn8eh"
+        token={(token) => console.log(token)}
+      />
     </div>
   );
 };

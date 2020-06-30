@@ -2,14 +2,13 @@ import { useRequest } from '../../hooks/useRequest';
 import { useEffect, useState } from 'react';
 
 const OrderDetails = ({ order }) => {
-  const [timeLeft, setTimeLeft] = useState('');
+  const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
     const findTimeLeft = () => {
       const msLeft = new Date(order.expiresAt) - new Date();
-      const roundedTime = Math.round(msLeft / 1000);
 
-      setTimeLeft(roundedTime > 0 ? roundedTime : 0);
+      setTimeLeft(Math.round(msLeft / 1000));
     };
 
     findTimeLeft();
@@ -19,6 +18,13 @@ const OrderDetails = ({ order }) => {
       clearInterval(interval);
     };
   }, []);
+
+  if (timeLeft < 0)
+    return (
+      <div>
+        <h1>Order Expired</h1>
+      </div>
+    );
 
   return (
     <div>
